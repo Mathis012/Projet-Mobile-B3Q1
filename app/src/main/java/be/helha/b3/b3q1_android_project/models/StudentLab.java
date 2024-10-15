@@ -74,9 +74,7 @@ public class StudentLab {
             null,
             whereClause,
             whereArgs,
-            null,
-            null,
-            null
+            null, null, null
         );
         return new StudentsCursorWrapper(cursor);
     }
