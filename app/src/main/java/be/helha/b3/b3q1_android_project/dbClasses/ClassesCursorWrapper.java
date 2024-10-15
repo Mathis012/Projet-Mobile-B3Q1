@@ -14,10 +14,8 @@ public class ClassesCursorWrapper extends CursorWrapper {
     }
     public Classe getClasse()
     {
-        String uuidString=
-                getString(getColumnIndex(ClassesDbSchema.ClassesTable.cols.UUID));
-        String name=
-                getString(getColumnIndex(ClassesDbSchema.ClassesTable.cols.NAME));
+        String uuidString= getString(getColumnIndex(ClassesDbSchema.ClassesTable.cols.UUID));
+        String name= getString(getColumnIndex(ClassesDbSchema.ClassesTable.cols.NAME));
         Classe classe=new Classe(UUID.fromString(uuidString));
         classe.setName(name);
         return classe;
