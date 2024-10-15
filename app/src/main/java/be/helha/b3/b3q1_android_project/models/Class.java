@@ -2,13 +2,13 @@ package be.helha.b3.b3q1_android_project.models;
 
 import java.util.UUID;
 
-public class Classe {
+public class Class {
     private String mName;
     private UUID mId;
 
-    public Classe(UUID id) {
-        mId = id;
-        mName = "";
+    public Class(UUID id, String name) {
+        this.mId = id;
+        this.mName = name;
     }
 
     public UUID getId() {

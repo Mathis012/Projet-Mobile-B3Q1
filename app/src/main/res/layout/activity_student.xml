@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".StudentActivity">
+    tools:context=".controllers.StudentActivity">
 
     <TextView
         android:id="@+id/headerText"

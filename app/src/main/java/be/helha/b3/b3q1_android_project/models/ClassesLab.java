@@ -31,12 +31,12 @@ public class ClassesLab {
         mDatabase=new ClassesBasesHelper(mContext).getWritableDatabase();
     }
 
-    public void addClasse(Classe classe)
+    public void addClasse(Class aClass)
     {
-        mDatabase.insert(ClassesDbSchema.ClassesTable.NAME,null,getContentValues(classe));
+        mDatabase.insert(ClassesDbSchema.ClassesTable.NAME,null,getContentValues(aClass));
     }
 
-    public Classe getClasse(String uuid)
+    public Class getClasse(String uuid)
     {
         ClassesCursorWrapper cursor= queryClasses(ClassesDbSchema.ClassesTable.cols.UUID+"=?", new String[]{uuid});
         try
@@ -52,16 +52,16 @@ public class ClassesLab {
         }
     }
 
-    public List<Classe> getClasses()
+    public List<Class> getClasses()
     {
-        ArrayList<Classe> classes=new ArrayList<>();
+        ArrayList<Class> aClasses =new ArrayList<>();
         ClassesCursorWrapper cursor=queryClasses(null,null);
         try
         {
             cursor.moveToFirst();
             while(!cursor.isAfterLast())
             {
-                classes.add(cursor.getClasse());
+                aClasses.add(cursor.getClasse());
                 cursor.moveToNext();
             }
         }
@@ -69,14 +69,14 @@ public class ClassesLab {
         {
             cursor.close();
         }
-        return classes;
+        return aClasses;
     }
 
-    private ContentValues getContentValues(Classe classe)
+    private ContentValues getContentValues(Class aClass)
     {
         ContentValues values=new ContentValues();
-        values.put(ClassesDbSchema.ClassesTable.cols.UUID,classe.getId().toString());
-        values.put(ClassesDbSchema.ClassesTable.cols.NAME,classe.getName());
+        values.put(ClassesDbSchema.ClassesTable.cols.UUID, aClass.getId().toString());
+        values.put(ClassesDbSchema.ClassesTable.cols.NAME, aClass.getName());
         return values;
     }
 

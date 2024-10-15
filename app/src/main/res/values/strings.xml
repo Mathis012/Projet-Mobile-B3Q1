@@ -1,9 +1,10 @@
 <resources>
     <string name="app_name">B3Q1_Android_project</string>
-    <string name="classes">Classes</string>
+    <string name="aClasses">Classes</string>
     <string name="ba1">BA1</string>
     <string name="ba2">BA2</string>
     <string name="ba3">BA3</string>
     <string name="student_ba1">Les étudiants de BA1</string>
     <string name="eval_ba1">Évaluations BA1</string>
+
 </resources>
