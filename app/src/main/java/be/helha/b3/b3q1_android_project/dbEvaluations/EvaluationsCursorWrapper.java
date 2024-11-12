@@ -1,4 +1,4 @@
-package be.helha.b3.b3q1_android_project.dbEvaluation;
+package be.helha.b3.b3q1_android_project.dbEvaluations;
 
 import android.database.Cursor;
 import android.database.CursorWrapper;

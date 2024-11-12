@@ -1,6 +1,5 @@
 package be.helha.b3.b3q1_android_project.controllers;
 
-import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
@@ -18,7 +17,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,9 +69,11 @@ public class MainActivity extends AppCompatActivity {
             EditText classNameEdit = classView.findViewById(R.id.classNameEdit);
             className.setText(aClass.getName());
 
-            ImageButton evaluationButton = classView.findViewById(R.id.evaluationButton);
-            evaluationButton.setOnClickListener(v -> {
-                Intent intent = new Intent(MainActivity.this, EvaluationActivity.class);
+            ImageButton courseButton = classView.findViewById(R.id.courseButton);
+            courseButton.setOnClickListener(v -> {
+                Intent intent = new Intent(MainActivity.this, CourseActivity.class);
+                intent.putExtra("CLASS_ID", aClass.getId().toString());
+                intent.putExtra("CLASS_NAME", aClass.getName());
                 startActivity(intent);
             });
 
@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                 className.setText(classNameEdit.getText());
                 className.setVisibility(View.VISIBLE);
                 classNameEdit.setVisibility(View.GONE);
-                evaluationButton.setVisibility(View.VISIBLE);
+                courseButton.setVisibility(View.VISIBLE);
                 studentButton.setVisibility(View.VISIBLE);
                 trashButton.setVisibility(View.GONE);
                 checkButton.setVisibility(View.GONE);
@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
                 className.setVisibility(View.GONE);
                 classNameEdit.setVisibility(View.VISIBLE);
                 classNameEdit.setText(className.getText());
-                evaluationButton.setVisibility(View.GONE);
+                courseButton.setVisibility(View.GONE);
                 studentButton.setVisibility(View.GONE);
                 trashButton.setVisibility(View.VISIBLE);
                 checkButton.setVisibility(View.VISIBLE);

@@ -5,6 +5,12 @@
     <string name="ba2">BA2</string>
     <string name="ba3">BA3</string>
     <string name="student_ba1">Les étudiants de BA1</string>
-    <string name="eval_ba1">Évaluations BA1</string>
-
+    <string name="eval_name">Évaluations %1$s</string>
+    <string name="add_button_description">Add</string>
+    <string name="course_name">Nom du cours</string>
+    <string name="modification">modification</string>
+    <string name="confirm">Confirm</string>
+    <string name="delete">Delete</string>
+    <string name="person">Person</string>
+    <string name="course">course</string>
 </resources>

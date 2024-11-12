@@ -7,9 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-import be.helha.b3.b3q1_android_project.dbEvaluation.EvaluationsBasesHelper;
-import be.helha.b3.b3q1_android_project.dbEvaluation.EvaluationsCursorWrapper;
-import be.helha.b3.b3q1_android_project.dbEvaluation.EvaluationsDbSchema;
+import be.helha.b3.b3q1_android_project.dbEvaluations.EvaluationsBasesHelper;
+import be.helha.b3.b3q1_android_project.dbEvaluations.EvaluationsCursorWrapper;
+import be.helha.b3.b3q1_android_project.dbEvaluations.EvaluationsDbSchema;
 
 public class EvaluationLab {
     private static EvaluationLab sEvaluationLab;

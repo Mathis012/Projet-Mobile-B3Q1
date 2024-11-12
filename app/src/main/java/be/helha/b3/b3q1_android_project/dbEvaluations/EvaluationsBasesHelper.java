@@ -1,4 +1,4 @@
-package be.helha.b3.b3q1_android_project.dbEvaluation;
+package be.helha.b3.b3q1_android_project.dbEvaluations;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -12,9 +12,11 @@ public class EvaluationsBasesHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + EvaluationsDbSchema.EvaluationsTable.NAME + "("
-                + "_id integer PRIMARY KEY AUTOINCREMENT, "
-                + EvaluationsDbSchema.EvaluationsTable.cols.UUID + ", " + EvaluationsDbSchema.EvaluationsTable.cols.NAME + ", "
-                + EvaluationsDbSchema.EvaluationsTable.cols.CLASSE + ", " + EvaluationsDbSchema.EvaluationsTable.cols.MAX_POINT + ")"
+                + "_id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + EvaluationsDbSchema.EvaluationsTable.cols.UUID + " TEXT, "
+                + EvaluationsDbSchema.EvaluationsTable.cols.NAME + " TEXT, "
+                + EvaluationsDbSchema.EvaluationsTable.cols.CLASSE + " INTEGER, "
+                + EvaluationsDbSchema.EvaluationsTable.cols.MAX_POINT + " INTEGER)"
         );
     }
 
