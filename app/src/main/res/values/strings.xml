@@ -13,4 +13,8 @@
     <string name="delete">Delete</string>
     <string name="person">Person</string>
     <string name="course">course</string>
+    <string name="arrow_forward">flèche</string>
+    <string name="edition">Edition</string>
+    <string name="nom_de_l_valuation">Nom de l\'évaluation</string>
+    <string name="score">Score</string>
 </resources>

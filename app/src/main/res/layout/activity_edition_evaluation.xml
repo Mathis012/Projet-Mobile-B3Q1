@@ -5,15 +5,15 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".controllers.EvaluationActivity">
+    tools:context=".controllers.EditionEvaluationActivity">
 
     <TextView
         android:id="@+id/headerText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="#FF6200EE"
+        android:background="#AA64C7"
         android:padding="16dp"
-        android:text="@string/eval_name"
+        android:text="@string/edition"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -22,27 +22,26 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <ImageButton
-        android:id="@+id/arrowButton"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="16dp"
-        android:src="@drawable/arrow_forward"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:contentDescription="@string/arrow_forward"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/headerText"
+        android:id="@+id/addButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/add_button_description"
+        android:src="@drawable/ic_add"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:tint="@android:color/white" />
+        tools:ignore="TouchTargetSizeCheck" />
 
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@id/headerText"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/addButton">
 
         <LinearLayout
-            android:id="@+id/courseList"
+            android:id="@+id/evalList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"

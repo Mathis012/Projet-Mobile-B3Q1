@@ -35,7 +35,7 @@ public class CourseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_evaluation);
+        setContentView(R.layout.activity_course);
 
         classId = getIntent().getStringExtra("CLASS_ID");
         String className = getIntent().getStringExtra("CLASS_NAME");
