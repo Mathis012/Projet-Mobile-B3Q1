@@ -3,13 +3,11 @@ package be.helha.b3.b3q1_android_project.controllers;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import be.helha.b3.b3q1_android_project.R;
-import be.helha.b3.b3q1_android_project.dbEvaluations.EvaluationsBasesHelper;
 
 public class EvaluationActivity extends AppCompatActivity {
 

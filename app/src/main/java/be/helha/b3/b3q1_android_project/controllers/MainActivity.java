@@ -23,13 +23,13 @@ import java.util.List;
 import java.util.UUID;
 
 import be.helha.b3.b3q1_android_project.R;
-import be.helha.b3.b3q1_android_project.dbClasses.ClassesBasesHelper;
-import be.helha.b3.b3q1_android_project.dbClasses.ClassesDbSchema;
+import be.helha.b3.b3q1_android_project.db.AppDatabaseHelper;
+import be.helha.b3.b3q1_android_project.db.AppDbSchema;
 import be.helha.b3.b3q1_android_project.models.Class;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ClassesBasesHelper dbHelper;
+    private AppDatabaseHelper dbHelper;
     private LinearLayout classListLayout;
     private static final String TAG = "MainActivity";
 
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        dbHelper = new ClassesBasesHelper(this);
+        dbHelper = new AppDatabaseHelper(this);
         classListLayout = findViewById(R.id.classList);
 
         loadClasses();
@@ -123,14 +123,14 @@ public class MainActivity extends AppCompatActivity {
         List<Class> aClasses = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cursor = db.query(
-                ClassesDbSchema.ClassesTable.NAME,
+                AppDbSchema.ClassTable.NAME,
                 null, null, null, null, null, null
         );
         try {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
-                String uuid = cursor.getString(cursor.getColumnIndexOrThrow(ClassesDbSchema.ClassesTable.cols.UUID));
-                String name = cursor.getString(cursor.getColumnIndexOrThrow(ClassesDbSchema.ClassesTable.cols.NAME));
+                String uuid = cursor.getString(cursor.getColumnIndexOrThrow(AppDbSchema.ClassTable.Cols.UUID));
+                String name = cursor.getString(cursor.getColumnIndexOrThrow(AppDbSchema.ClassTable.Cols.NAME));
                 aClasses.add(new Class(UUID.fromString(uuid), name));
                 cursor.moveToNext();
                 }
@@ -143,20 +143,20 @@ public class MainActivity extends AppCompatActivity {
     private void addNewClass(String name) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(ClassesDbSchema.ClassesTable.cols.UUID, UUID.randomUUID().toString());
-        values.put(ClassesDbSchema.ClassesTable.cols.NAME, name);
-        db.insert(ClassesDbSchema.ClassesTable.NAME, null, values);
+        values.put(AppDbSchema.ClassTable.Cols.UUID, UUID.randomUUID().toString());
+        values.put(AppDbSchema.ClassTable.Cols.NAME, name);
+        db.insert(AppDbSchema.ClassTable.NAME, null, values);
     }
 
     private void updateClassName(UUID classId, String Newname) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(ClassesDbSchema.ClassesTable.cols.NAME, Newname);
-        db.update(ClassesDbSchema.ClassesTable.NAME, values, ClassesDbSchema.ClassesTable.cols.UUID + " = ?", new String[]{classId.toString()});
+        values.put(AppDbSchema.ClassTable.Cols.NAME, Newname);
+        db.update(AppDbSchema.ClassTable.NAME, values, AppDbSchema.ClassTable.Cols.UUID + " = ?", new String[]{classId.toString()});
     }
 
     private void deleteClass(UUID id) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        db.delete(ClassesDbSchema.ClassesTable.NAME, ClassesDbSchema.ClassesTable.cols.UUID + " = ?", new String[]{id.toString()});
+        db.delete(AppDbSchema.ClassTable.NAME, AppDbSchema.ClassTable.Cols.UUID + " = ?", new String[]{id.toString()});
     }
 }

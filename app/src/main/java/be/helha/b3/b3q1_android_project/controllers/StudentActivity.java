@@ -15,14 +15,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import be.helha.b3.b3q1_android_project.R;
-import be.helha.b3.b3q1_android_project.dbStudents.StudentsBasesHelper;
-import be.helha.b3.b3q1_android_project.dbStudents.StudentsCursorWrapper;
-import be.helha.b3.b3q1_android_project.dbStudents.StudentsDbSchema;
+import be.helha.b3.b3q1_android_project.db.AppDatabaseHelper;
+import be.helha.b3.b3q1_android_project.db.AppDbSchema;
+import be.helha.b3.b3q1_android_project.db.StudentsCursorWrapper;
 import be.helha.b3.b3q1_android_project.models.Student;
 
 public class StudentActivity extends AppCompatActivity {
 
-    private StudentsBasesHelper dbHelper;
+    private AppDatabaseHelper dbHelper;
     private LinearLayout studentListLayout;
     private ImageButton addButton;
     private TextView headerText;
@@ -32,7 +32,7 @@ public class StudentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student);
 
-        dbHelper = new StudentsBasesHelper(this);
+        dbHelper = new AppDatabaseHelper(this);
         studentListLayout = findViewById(R.id.classListStudent);
         addButton = findViewById(R.id.addButton);
         headerText = findViewById(R.id.headerText);
@@ -64,9 +64,9 @@ public class StudentActivity extends AppCompatActivity {
         List<Student> students = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cursor = db.query(
-                StudentsDbSchema.StudentsTable.NAME,
+                AppDbSchema.StudentTable.NAME,
                 null,
-                StudentsDbSchema.StudentsTable.cols.CLASSE + " = ?",
+                AppDbSchema.StudentTable.Cols.CLASS_ID + " = ?",
                 new String[]{className},
                 null, null, null
         );

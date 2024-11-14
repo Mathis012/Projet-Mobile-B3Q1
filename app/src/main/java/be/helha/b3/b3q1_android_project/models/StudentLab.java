@@ -8,9 +8,9 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-import be.helha.b3.b3q1_android_project.dbStudents.StudentsBasesHelper;
-import be.helha.b3.b3q1_android_project.dbStudents.StudentsCursorWrapper;
-import be.helha.b3.b3q1_android_project.dbStudents.StudentsDbSchema;
+import be.helha.b3.b3q1_android_project.db.AppDatabaseHelper;
+import be.helha.b3.b3q1_android_project.db.AppDbSchema;
+import be.helha.b3.b3q1_android_project.db.StudentsCursorWrapper;
 
 public class StudentLab {
     private static StudentLab sStudentLab;
@@ -26,15 +26,15 @@ public class StudentLab {
 
     private StudentLab(Context context) {
         mContext = context.getApplicationContext();
-        mDatabase = new StudentsBasesHelper(mContext).getWritableDatabase();
+        mDatabase = new AppDatabaseHelper(mContext).getWritableDatabase();
     }
 
     public void addStudent(Student student) {
-        mDatabase.insert(StudentsDbSchema.StudentsTable.NAME, null, getContentValues(student));
+        mDatabase.insert(AppDbSchema.StudentTable.NAME, null, getContentValues(student));
     }
 
     public Student getStudent(String uuid) {
-        StudentsCursorWrapper cursor = queryStudents(StudentsDbSchema.StudentsTable.cols.UUID + "=?", new String[]{uuid});
+        StudentsCursorWrapper cursor = queryStudents(AppDbSchema.StudentTable.Cols.UUID + "=?", new String[]{uuid});
         try {
             if (cursor.getCount() == 0)
                 return null;
@@ -62,15 +62,15 @@ public class StudentLab {
 
     private ContentValues getContentValues(Student student) {
         ContentValues values = new ContentValues();
-        values.put(StudentsDbSchema.StudentsTable.cols.UUID, student.getId().toString());
-        values.put(StudentsDbSchema.StudentsTable.cols.FIRSTNAME, student.getFirstName());
-        values.put(StudentsDbSchema.StudentsTable.cols.CLASSE, student.getClasse());
+        values.put(AppDbSchema.StudentTable.Cols.UUID, student.getId().toString());
+        values.put(AppDbSchema.StudentTable.Cols.NAME, student.getFirstName());
+        values.put(AppDbSchema.StudentTable.Cols.CLASS_ID, student.getClasse());
         return values;
     }
 
     private StudentsCursorWrapper queryStudents(String whereClause, String[] whereArgs) {
         Cursor cursor = mDatabase.query(
-                StudentsDbSchema.StudentsTable.NAME,
+                AppDbSchema.StudentTable.NAME,
                 null,
                 whereClause,
                 whereArgs,

@@ -16,12 +16,12 @@ import java.util.List;
 import java.util.UUID;
 
 import be.helha.b3.b3q1_android_project.R;
-import be.helha.b3.b3q1_android_project.dbStudents.StudentsBasesHelper;
-import be.helha.b3.b3q1_android_project.dbStudents.StudentsDbSchema;
+import be.helha.b3.b3q1_android_project.db.AppDatabaseHelper;
+import be.helha.b3.b3q1_android_project.db.AppDbSchema;
 
 public class AddStudentActivity extends AppCompatActivity {
 
-    private StudentsBasesHelper dbHelper;
+    private AppDatabaseHelper dbHelper;
     private LinearLayout studentListLayout;
     private List<EditText> studentNameEdits;
 
@@ -30,7 +30,7 @@ public class AddStudentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_student);
 
-        dbHelper = new StudentsBasesHelper(this);
+        dbHelper = new AppDatabaseHelper(this);
         studentListLayout = findViewById(R.id.studentList);
         studentNameEdits = new ArrayList<>();
 
@@ -57,10 +57,10 @@ public class AddStudentActivity extends AppCompatActivity {
             String studentName = studentNameEdit.getText().toString();
             if (!studentName.isEmpty()) {
                 ContentValues values = new ContentValues();
-                values.put(StudentsDbSchema.StudentsTable.cols.UUID, UUID.randomUUID().toString());
-                values.put(StudentsDbSchema.StudentsTable.cols.FIRSTNAME, studentName);
-                values.put(StudentsDbSchema.StudentsTable.cols.CLASSE, getIntent().getStringExtra("CLASS_NAME"));
-                db.insert(StudentsDbSchema.StudentsTable.NAME, null, values);
+                values.put(AppDbSchema.StudentTable.Cols.UUID, UUID.randomUUID().toString());
+                values.put(AppDbSchema.StudentTable.Cols.NAME, studentName);
+                values.put(AppDbSchema.StudentTable.Cols.CLASS_ID, getIntent().getStringExtra("CLASS_NAME"));
+                db.insert(AppDbSchema.StudentTable.NAME, null, values);
             }
         }
         finish();

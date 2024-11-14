@@ -7,9 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-import be.helha.b3.b3q1_android_project.dbCourses.CoursesBasesHelper;
-import be.helha.b3.b3q1_android_project.dbCourses.CoursesCursorWrapper;
-import be.helha.b3.b3q1_android_project.dbCourses.CoursesDbSchema;
+import be.helha.b3.b3q1_android_project.db.AppDatabaseHelper;
+import be.helha.b3.b3q1_android_project.db.AppDbSchema;
+import be.helha.b3.b3q1_android_project.db.CoursesCursorWrapper;
 
 public class CourseLab {
     private static CourseLab sCourseLab;
@@ -25,15 +25,15 @@ public class CourseLab {
 
     private CourseLab(Context context) {
         mContext = context.getApplicationContext();
-        mDatabase = new CoursesBasesHelper(mContext).getWritableDatabase();
+        mDatabase = new AppDatabaseHelper(mContext).getWritableDatabase();
     }
 
     public void addCourse(Course course) {
-        mDatabase.insert(CoursesDbSchema.CoursesTable.NAME, null, getContentValues(course));
+        mDatabase.insert(AppDbSchema.CourseTable.NAME, null, getContentValues(course));
     }
 
     public Course getCourse(String uuid) {
-        CoursesCursorWrapper cursor = queryCourses(CoursesDbSchema.CoursesTable.cols.UUID + "=?", new String[]{uuid});
+        CoursesCursorWrapper cursor = queryCourses(AppDbSchema.CourseTable.Cols.UUID + "=?", new String[]{uuid});
         try {
             if (cursor.getCount() == 0)
                 return null;
@@ -61,15 +61,15 @@ public class CourseLab {
 
     private ContentValues getContentValues(Course course) {
         ContentValues values = new ContentValues();
-        values.put(CoursesDbSchema.CoursesTable.cols.UUID, course.getId().toString());
-        values.put(CoursesDbSchema.CoursesTable.cols.NAME, course.getName());
-        values.put(CoursesDbSchema.CoursesTable.cols.CLASS_ID, course.getClasseId().toString());
+        values.put(AppDbSchema.CourseTable.Cols.UUID, course.getId().toString());
+        values.put(AppDbSchema.CourseTable.Cols.NAME, course.getName());
+        values.put(AppDbSchema.CourseTable.Cols.CLASS_ID, course.getClasseId().toString());
         return values;
     }
 
     private CoursesCursorWrapper queryCourses(String whereClause, String[] whereArgs) {
         return new CoursesCursorWrapper(mDatabase.query(
-                CoursesDbSchema.CoursesTable.NAME,
+                AppDbSchema.CourseTable.NAME,
                 null,
                 whereClause,
                 whereArgs,
