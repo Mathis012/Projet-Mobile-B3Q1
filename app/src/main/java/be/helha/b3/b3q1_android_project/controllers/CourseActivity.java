@@ -20,14 +20,13 @@ import java.util.List;
 import java.util.UUID;
 
 import be.helha.b3.b3q1_android_project.R;
-import be.helha.b3.b3q1_android_project.dbClasses.ClassesDbSchema;
-import be.helha.b3.b3q1_android_project.dbCourses.CoursesBasesHelper;
-import be.helha.b3.b3q1_android_project.dbCourses.CoursesDbSchema;
+import be.helha.b3.b3q1_android_project.db.AppDatabaseHelper;
+import be.helha.b3.b3q1_android_project.db.AppDbSchema;
 import be.helha.b3.b3q1_android_project.models.Course;
 
 public class CourseActivity extends AppCompatActivity {
     private LinearLayout courseList;
-    private CoursesBasesHelper dbHelper;
+    private AppDatabaseHelper dbHelper;
     private static final String TAG = "CourseActivity";
     private String classId;
 
@@ -52,7 +51,7 @@ public class CourseActivity extends AppCompatActivity {
             }
         });
 
-        dbHelper = new CoursesBasesHelper(this);
+        dbHelper = new AppDatabaseHelper(this);
         courseList = findViewById(R.id.courseList);
 
         loadCourses();
@@ -99,17 +98,17 @@ public class CourseActivity extends AppCompatActivity {
         List<Course> aCourses = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cursor = db.query(
-                CoursesDbSchema.CoursesTable.NAME,
+                AppDbSchema.CourseTable.NAME,
                 null,
-                CoursesDbSchema.CoursesTable.cols.CLASS_ID + " = ?",
+                AppDbSchema.CourseTable.Cols.CLASS_ID + " = ?",
                 new String[]{classId},
                 null, null, null
         );
         try {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
-                String uuid = cursor.getString(cursor.getColumnIndexOrThrow(CoursesDbSchema.CoursesTable.cols.UUID));
-                String name = cursor.getString(cursor.getColumnIndexOrThrow(CoursesDbSchema.CoursesTable.cols.NAME));
+                String uuid = cursor.getString(cursor.getColumnIndexOrThrow(AppDbSchema.CourseTable.Cols.UUID));
+                String name = cursor.getString(cursor.getColumnIndexOrThrow(AppDbSchema.CourseTable.Cols.NAME));
                 aCourses.add(new Course(UUID.fromString(uuid), name, UUID.randomUUID()));// A VERIF !!!
                 cursor.moveToNext();
             }
@@ -122,16 +121,16 @@ public class CourseActivity extends AppCompatActivity {
     private void addNewCourse(String name) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(CoursesDbSchema.CoursesTable.cols.UUID, UUID.randomUUID().toString());
-        values.put(CoursesDbSchema.CoursesTable.cols.NAME, name);
-        values.put(CoursesDbSchema.CoursesTable.cols.CLASS_ID, classId);
-        db.insert(CoursesDbSchema.CoursesTable.NAME, null, values);
+        values.put(AppDbSchema.CourseTable.Cols.UUID, UUID.randomUUID().toString());
+        values.put(AppDbSchema.CourseTable.Cols.NAME, name);
+        values.put(AppDbSchema.CourseTable.Cols.CLASS_ID, classId);
+        db.insert(AppDbSchema.CourseTable.NAME, null, values);
     }
 
     private void updateCourseName(UUID courseId, String newName) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(CoursesDbSchema.CoursesTable.cols.NAME, newName);
-        db.update(CoursesDbSchema.CoursesTable.NAME, values, CoursesDbSchema.CoursesTable.cols.UUID + " = ?", new String[]{courseId.toString()});
+        values.put(AppDbSchema.CourseTable.Cols.NAME, newName);
+        db.update(AppDbSchema.CourseTable.NAME, values, AppDbSchema.CourseTable.Cols.UUID + " = ?", new String[]{courseId.toString()});
     }
 }

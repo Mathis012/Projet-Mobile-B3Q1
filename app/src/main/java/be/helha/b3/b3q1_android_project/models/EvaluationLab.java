@@ -7,9 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-import be.helha.b3.b3q1_android_project.dbEvaluations.EvaluationsBasesHelper;
-import be.helha.b3.b3q1_android_project.dbEvaluations.EvaluationsCursorWrapper;
-import be.helha.b3.b3q1_android_project.dbEvaluations.EvaluationsDbSchema;
+import be.helha.b3.b3q1_android_project.db.AppDatabaseHelper;
+import be.helha.b3.b3q1_android_project.db.AppDbSchema;
+import be.helha.b3.b3q1_android_project.db.EvaluationsCursorWrapper;
 
 public class EvaluationLab {
     private static EvaluationLab sEvaluationLab;
@@ -25,15 +25,15 @@ public class EvaluationLab {
 
     private EvaluationLab(Context context) {
         mContext = context.getApplicationContext();
-        mDatabase = new EvaluationsBasesHelper(mContext).getWritableDatabase();
+        mDatabase = new AppDatabaseHelper(mContext).getWritableDatabase();
     }
 
     public void addEvaluation(Evaluation evaluation) {
-        mDatabase.insert(EvaluationsDbSchema.EvaluationsTable.NAME, null, getContentValues(evaluation));
+        mDatabase.insert(AppDbSchema.EvaluationTable.NAME, null, getContentValues(evaluation));
     }
 
     public Evaluation getEvaluation(String uuid) {
-        EvaluationsCursorWrapper cursor = queryEvaluations(EvaluationsDbSchema.EvaluationsTable.cols.UUID + "=?", new String[]{uuid});
+        EvaluationsCursorWrapper cursor = queryEvaluations(AppDbSchema.EvaluationTable.Cols.UUID + "=?", new String[]{uuid});
         try {
             if (cursor.getCount() == 0)
                 return null;
@@ -61,16 +61,16 @@ public class EvaluationLab {
 
     private ContentValues getContentValues(Evaluation evaluation) {
         ContentValues values = new ContentValues();
-        values.put(EvaluationsDbSchema.EvaluationsTable.cols.UUID, evaluation.getId().toString());
-        values.put(EvaluationsDbSchema.EvaluationsTable.cols.NAME, evaluation.getName());
-        values.put(String.valueOf(EvaluationsDbSchema.EvaluationsTable.cols.CLASSE), evaluation.getClasse());
-        values.put(String.valueOf(EvaluationsDbSchema.EvaluationsTable.cols.MAX_POINT), evaluation.getMaxPoint());
+        values.put(AppDbSchema.EvaluationTable.Cols.UUID, evaluation.getId().toString());
+        values.put(AppDbSchema.EvaluationTable.Cols.NAME, evaluation.getName());
+        values.put(String.valueOf(AppDbSchema.EvaluationTable.Cols.CLASSE), evaluation.getClasse());
+        values.put(String.valueOf(AppDbSchema.EvaluationTable.Cols.MAX_POINT), evaluation.getMaxPoint());
         return values;
     }
 
     private EvaluationsCursorWrapper queryEvaluations(String whereClause, String[] whereArgs) {
         return new EvaluationsCursorWrapper(mDatabase.query(
-                EvaluationsDbSchema.EvaluationsTable.NAME,
+                AppDbSchema.EvaluationTable.NAME,
                 null,
                 whereClause,
                 whereArgs,

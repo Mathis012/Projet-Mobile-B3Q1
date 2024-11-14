@@ -7,10 +7,10 @@ public class Student {
     private UUID mId;
     private String mClasse;
 
-    public Student(UUID id) {
+    public Student(UUID id, String firstName, String classe) {
         mId = id;
-        mFirstName = "";
-        mClasse = "";
+        mFirstName = firstName;
+        mClasse = classe;
     }
 
     public UUID getId() {return mId;}

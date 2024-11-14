@@ -1,4 +1,4 @@
-package be.helha.b3.b3q1_android_project.dbClasses;
+package be.helha.b3.b3q1_android_project.db;
 
 import android.database.Cursor;
 import android.database.CursorWrapper;
@@ -15,9 +15,10 @@ public class ClassesCursorWrapper extends CursorWrapper {
 
     public Class getClasse() {
         String uuidString=
-                getString(getColumnIndex(ClassesDbSchema.ClassesTable.cols.UUID));
+                getString(getColumnIndex(AppDbSchema.ClassTable.Cols.UUID));
         String name=
-                getString(getColumnIndex(ClassesDbSchema.ClassesTable.cols.NAME));
+                getString(getColumnIndex(AppDbSchema.ClassTable.Cols.NAME));
+
         return new Class (UUID.fromString(uuidString), name);
     }
 }
