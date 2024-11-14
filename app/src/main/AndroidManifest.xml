@@ -13,6 +13,12 @@
         android:theme="@style/Theme.B3Q1_Android_project"
         tools:targetApi="31">
         <activity
+            android:name=".controllers.EditionEvaluationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".controllers.CourseActivity"
+            android:exported="false" />
+        <activity
             android:name=".controllers.StudentActivity"
             android:exported="false" />
         <activity
