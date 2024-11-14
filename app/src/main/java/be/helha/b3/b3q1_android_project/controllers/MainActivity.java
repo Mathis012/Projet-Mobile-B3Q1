@@ -80,6 +80,8 @@ public class MainActivity extends AppCompatActivity {
             ImageButton studentButton = classView.findViewById(R.id.studentButton);
             studentButton.setOnClickListener(v -> {
                 Intent intent = new Intent(MainActivity.this, StudentActivity.class);
+                String classNameText = className.getText().toString();
+                intent.putExtra("CLASS_NAME", classNameText);
                 startActivity(intent);
             });
 

@@ -5,21 +5,21 @@ import java.util.UUID;
 public class Student {
     private String mFirstName;
     private UUID mId;
-    private Integer mClasse;
+    private String mClasse;
 
     public Student(UUID id) {
         mId = id;
         mFirstName = "";
-        mClasse = null;
+        mClasse = "";
     }
 
     public UUID getId() {return mId;}
 
     public String getFirstName() {return mFirstName;}
 
-    public Integer getClasse() {return mClasse;}
+    public String getClasse() {return mClasse;}
 
     public void setFirstName(String firstName) {mFirstName = firstName;}
 
-    public void setClasse(Integer classe) {mClasse = classe;}
+    public void setClasse(String classe) {mClasse = classe;}
 }

@@ -17,4 +17,8 @@
     <string name="edition">Edition</string>
     <string name="nom_de_l_valuation">Nom de l\'évaluation</string>
     <string name="score">Score</string>
+    <string name="addStudent">Add Student</string>
+    <string name="saveStudent">Save</string>
+    <string name="studentName">Student Name</string>
+        <string name="aAddStudent">Ajouter des Etudiants</string>
 </resources>

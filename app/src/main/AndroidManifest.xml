@@ -16,6 +16,10 @@
             android:name=".controllers.EditionEvaluationActivity"
             android:exported="false" />
         <activity
+            android:name=".controllers.AddStudentActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".controllers.CourseActivity"
             android:exported="false" />
         <activity

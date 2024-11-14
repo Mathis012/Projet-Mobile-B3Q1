@@ -64,17 +64,17 @@ public class StudentLab {
         ContentValues values = new ContentValues();
         values.put(StudentsDbSchema.StudentsTable.cols.UUID, student.getId().toString());
         values.put(StudentsDbSchema.StudentsTable.cols.FIRSTNAME, student.getFirstName());
-        values.put(String.valueOf(StudentsDbSchema.StudentsTable.cols.CLASSE), student.getClasse());
+        values.put(StudentsDbSchema.StudentsTable.cols.CLASSE, student.getClasse());
         return values;
     }
 
     private StudentsCursorWrapper queryStudents(String whereClause, String[] whereArgs) {
         Cursor cursor = mDatabase.query(
-            StudentsDbSchema.StudentsTable.NAME,
-            null,
-            whereClause,
-            whereArgs,
-            null, null, null
+                StudentsDbSchema.StudentsTable.NAME,
+                null,
+                whereClause,
+                whereArgs,
+                null, null, null
         );
         return new StudentsCursorWrapper(cursor);
     }

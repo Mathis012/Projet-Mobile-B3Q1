@@ -9,17 +9,20 @@ public class StudentsBasesHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "students.db";
 
     public StudentsBasesHelper(Context context) {
-        super(null, DATABASE_NAME, null, VERSION);
+        super(context, DATABASE_NAME, null, VERSION);
     }
+
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table " + StudentsDbSchema.StudentsTable.NAME + "(" +
-                " _id integer primary key autoincrement, " +
-                StudentsDbSchema.StudentsTable.cols.UUID + ", " +
-                StudentsDbSchema.StudentsTable.cols.FIRSTNAME + ", " +
-                StudentsDbSchema.StudentsTable.cols.CLASSE + ")");
+        db.execSQL("CREATE TABLE " + StudentsDbSchema.StudentsTable.NAME + " (" +
+                "_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                StudentsDbSchema.StudentsTable.cols.UUID + " TEXT, " +
+                StudentsDbSchema.StudentsTable.cols.FIRSTNAME + " TEXT, " +
+                StudentsDbSchema.StudentsTable.cols.CLASSE + " TEXT" +
+                ")");
     }
+
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {}
