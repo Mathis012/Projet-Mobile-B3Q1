@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class AppDatabaseHelper extends SQLiteOpenHelper {
-    private static final int VERSION = 3;
+    private static final int VERSION = 7;
     private static final String DATABASE_NAME = "appDatabase.db";
 
     public AppDatabaseHelper(Context context) {
@@ -30,8 +30,11 @@ public class AppDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE " + AppDbSchema.EvaluationTable.NAME + "(" +
                 " _id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 AppDbSchema.EvaluationTable.Cols.UUID + " TEXT, " +
+                AppDbSchema.EvaluationTable.Cols.NAME + " TEXT, " +
                 AppDbSchema.EvaluationTable.Cols.SCORE + " INTEGER, " +
-                AppDbSchema.EvaluationTable.Cols.COURSE_ID + " TEXT" +
+                AppDbSchema.EvaluationTable.Cols.MAX_POINT + " INTEGER, " +
+                AppDbSchema.EvaluationTable.Cols.COURSE_ID + " INTEGER," +
+                AppDbSchema.EvaluationTable.Cols.IS_SUB_EVALUATION + " INTEGER" +
                 ")");
 
         db.execSQL("CREATE TABLE " + AppDbSchema.StudentTable.NAME + "(" +
@@ -44,14 +47,10 @@ public class AppDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (oldVersion < 3) {
-            db.execSQL("DROP TABLE IF EXISTS " + AppDbSchema.CourseTable.NAME);
-            db.execSQL("CREATE TABLE " + AppDbSchema.CourseTable.NAME + "(" +
-                    " _id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    AppDbSchema.CourseTable.Cols.UUID + " TEXT, " +
-                    AppDbSchema.CourseTable.Cols.NAME + " TEXT, " +
-                    AppDbSchema.CourseTable.Cols.CLASS_ID + " TEXT" +
-                    ")");
+        if (oldVersion < 7) {
+            db.execSQL("ALTER TABLE " + AppDbSchema.EvaluationTable.NAME +
+                    " ADD COLUMN " + AppDbSchema.EvaluationTable.Cols.IS_SUB_EVALUATION + " INTEGER");
+
         }
     }
 }

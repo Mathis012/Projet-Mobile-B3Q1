@@ -5,27 +5,35 @@ import java.util.UUID;
 public class Evaluation {
     private String mName;
     private UUID mId;
-    private Integer mClasse;
     private Integer mMaxPoint;
+    private Integer mScore;
+    private Integer mCourseId;
+    private boolean mSubEvaluation;
 
     public Evaluation(UUID id) {
-        mId = id;
-        mName = "";
-        mClasse = null;
-        mMaxPoint = null;
+        this.mId = id;
     }
 
     public UUID getId() {return mId;}
 
     public String getName() {return mName;}
 
-    public Integer getClasse() {return mClasse;}
 
     public Integer getMaxPoint() {return mMaxPoint;}
 
+    public Integer getScore() {return mScore;}
+
+    public Integer getCourseId() {return mCourseId;}
+
+    public boolean isSubEvaluation() {return mSubEvaluation;}
+
     public void setName(String name) {mName = name;}
 
-    public void setClasse(Integer classe) {mClasse = classe;}
-
     public void setMaxPoint(Integer maxPoint) {mMaxPoint = maxPoint;}
+
+    public void setScore(Integer score) {mScore = score;}
+
+    public void setCourseId(Integer courseId) {mCourseId = courseId;}
+
+    public void setSubEvaluation(boolean subEvaluation) {mSubEvaluation = subEvaluation;}
 }
