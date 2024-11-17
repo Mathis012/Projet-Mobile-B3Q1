@@ -44,4 +44,16 @@ public final class AppDbSchema {
             public static final String CLASS_ID = "class_id"; // Clé étrangère vers la table Class
         }
     }
+
+    public static final class GradeTable {
+        public static final String NAME = "grades";
+
+        public static final class Cols {
+            public static final String UUID = "uuid";
+            public static final String STUDENT_ID = "student_id"; // Clé étrangère vers Student
+            public static final String EVALUATION_ID = "evaluation_id"; // Clé étrangère vers Evaluation
+            public static final String SCORE = "score";
+        }
+    }
+
 }
