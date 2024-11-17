@@ -16,12 +16,14 @@ public class EvaluationsCursorWrapper extends CursorWrapper {
         int courseId = getInt(getColumnIndex(AppDbSchema.EvaluationTable.Cols.COURSE_ID));
         int maxPoint = getInt(getColumnIndex(AppDbSchema.EvaluationTable.Cols.MAX_POINT));
         int score = getInt(getColumnIndex(AppDbSchema.EvaluationTable.Cols.SCORE));
+        boolean isSubEvaluation = getInt(getColumnIndex(AppDbSchema.EvaluationTable.Cols.IS_SUB_EVALUATION)) == 1;
 
         Evaluation evaluation=new Evaluation(UUID.fromString(uuidString));
         evaluation.setName(name);
         evaluation.setMaxPoint(maxPoint);
         evaluation.setScore(score);
         evaluation.setCourseId(courseId);
+        evaluation.setSubEvaluation(isSubEvaluation);
 
         return evaluation;
     }

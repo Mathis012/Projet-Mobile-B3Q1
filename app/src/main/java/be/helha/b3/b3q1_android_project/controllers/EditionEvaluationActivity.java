@@ -145,7 +145,12 @@ public class EditionEvaluationActivity extends AppCompatActivity {
         for (Evaluation evaluation : evaluations) {
             LinearLayout evaluationLayout = new LinearLayout(this);
             evaluationLayout.setOrientation(LinearLayout.HORIZONTAL);
-            evaluationLayout.setPadding(evaluation.isSubEvaluation() ? 32 : 0, 8, 8, 8);
+
+            if (evaluation.isSubEvaluation()) {
+                evaluationLayout.setPadding(50, 8, 8, 8);
+            } else {
+                evaluationLayout.setPadding(0, 8, 8, 8);
+            }
 
             TextView evaluationName = new TextView(this);
             evaluationName.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
