@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class AppDatabaseHelper extends SQLiteOpenHelper {
-    private static final int VERSION = 7;
+    private static final int VERSION = 8;
     private static final String DATABASE_NAME = "appDatabase.db";
 
     public AppDatabaseHelper(Context context) {
@@ -43,14 +43,29 @@ public class AppDatabaseHelper extends SQLiteOpenHelper {
                 AppDbSchema.StudentTable.Cols.NAME + " TEXT, " +
                 AppDbSchema.StudentTable.Cols.CLASS_ID + " TEXT" +
                 ")");
+
+        db.execSQL("CREATE TABLE " + AppDbSchema.GradeTable.NAME + "(" +
+                " _id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                AppDbSchema.GradeTable.Cols.UUID + " TEXT, " +
+                AppDbSchema.GradeTable.Cols.STUDENT_ID + " TEXT, " +
+                AppDbSchema.GradeTable.Cols.EVALUATION_ID + " TEXT, " +
+                AppDbSchema.GradeTable.Cols.SCORE + " INTEGER" +
+                ")");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (oldVersion < 7) {
+        if (oldVersion < 8) {
             db.execSQL("ALTER TABLE " + AppDbSchema.EvaluationTable.NAME +
                     " ADD COLUMN " + AppDbSchema.EvaluationTable.Cols.IS_SUB_EVALUATION + " INTEGER");
 
+            db.execSQL("CREATE TABLE " + AppDbSchema.GradeTable.NAME + "(" +
+                    " _id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    AppDbSchema.GradeTable.Cols.UUID + " TEXT, " +
+                    AppDbSchema.GradeTable.Cols.STUDENT_ID + " TEXT, " +
+                    AppDbSchema.GradeTable.Cols.EVALUATION_ID + " TEXT, " +
+                    AppDbSchema.GradeTable.Cols.SCORE + " INTEGER" +
+                    ")");
         }
     }
 }

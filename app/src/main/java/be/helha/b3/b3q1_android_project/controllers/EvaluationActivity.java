@@ -107,6 +107,13 @@ public class EvaluationActivity extends AppCompatActivity {
                 arrowButton.setContentDescription("Voir plus");
                 arrowButton.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
+                arrowButton.setOnClickListener(v -> {
+                    Intent intent = new Intent(EvaluationActivity.this, StudentGradesActivity.class);
+                    intent.putExtra("STUDENT_ID", student.getId().toString());
+                    startActivity(intent);
+                });
+
+
                 studentRow.addView(studentTextView);
                 studentRow.addView(arrowButton);
 
