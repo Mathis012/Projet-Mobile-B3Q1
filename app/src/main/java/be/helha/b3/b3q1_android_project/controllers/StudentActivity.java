@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -39,14 +40,16 @@ public class StudentActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String className = intent.getStringExtra("CLASS_NAME");
+        String classId = intent.getStringExtra("CLASS_ID");
         headerText.setText("Les étudiants de " + className);
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(StudentActivity.this, AddStudentActivity.class);
-                intent.putExtra("CLASS_NAME", className);
+                intent.putExtra("CLASS_ID", classId);
                 startActivity(intent);
+                Log.d("StudentActivity", "CLASS_ID sent to AddStudentActivity: " + classId);
             }
         });
     }
@@ -55,19 +58,32 @@ public class StudentActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Intent intent = getIntent();
-        String className = intent.getStringExtra("CLASS_NAME");
-        List<Student> students = getStudentsFromDatabase(className);
+        String classId = intent.getStringExtra("CLASS_ID");
+        if (classId == null || classId.isEmpty()) {
+            // Log ou message d'erreur
+            Log.e("StudentActivity", "CLASS_ID is null or empty. Cannot fetch students.");
+            displayStudents(new ArrayList<>()); // Affiche une liste vide
+            return;
+        }
+
+        List<Student> students = getStudentsFromDatabase(classId);
         displayStudents(students);
     }
 
-    private List<Student> getStudentsFromDatabase(String className) {
+    private List<Student> getStudentsFromDatabase(String classId) {
         List<Student> students = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        if (classId == null) {
+            Log.e("StudentActivity", "getStudentsFromDatabase called with null classId.");
+            return students;
+        }
+
         Cursor cursor = db.query(
                 AppDbSchema.StudentTable.NAME,
                 null,
                 AppDbSchema.StudentTable.Cols.CLASS_ID + " = ?",
-                new String[]{className},
+                new String[]{classId},
                 null, null, null
         );
 
