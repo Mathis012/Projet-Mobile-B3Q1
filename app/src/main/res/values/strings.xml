@@ -16,7 +16,7 @@
     <string name="arrow_forward">flèche</string>
     <string name="edition">Edition</string>
     <string name="nom_de_l_valuation">Nom de l\'évaluation</string>
-    <string name="score">Score</string>
+    <string name="maxPoints">MaxPoints</string>
     <string name="addStudent">Add Student</string>
     <string name="saveStudent">Save</string>
     <string name="studentName">Student Name</string>

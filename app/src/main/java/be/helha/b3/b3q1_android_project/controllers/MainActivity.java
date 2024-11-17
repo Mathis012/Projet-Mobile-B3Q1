@@ -82,7 +82,10 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, StudentActivity.class);
                 String classNameText = className.getText().toString();
                 intent.putExtra("CLASS_NAME", classNameText);
+                intent.putExtra("CLASS_ID", aClass.getId().toString());
                 startActivity(intent);
+
+                Log.d("MainActivity", "CLASS_ID sent to StudentActivity: " + aClass.getId().toString());
             });
 
             ImageButton trashButton = classView.findViewById(R.id.trashButton);
@@ -132,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
                 String uuid = cursor.getString(cursor.getColumnIndexOrThrow(AppDbSchema.ClassTable.Cols.UUID));
                 String name = cursor.getString(cursor.getColumnIndexOrThrow(AppDbSchema.ClassTable.Cols.NAME));
                 aClasses.add(new Class(UUID.fromString(uuid), name));
+                Log.d("MainActivity", "CLASS_ID retrieved from database: " + uuid);
                 cursor.moveToNext();
                 }
         } finally {

@@ -87,6 +87,8 @@ public class CourseActivity extends AppCompatActivity {
             courseName.setOnClickListener(v -> {
                 Intent intent = new Intent(CourseActivity.this, EvaluationActivity.class);
                 intent.putExtra("COURSE_NAME", aCourse.getName());
+                intent.putExtra("COURSE_ID", aCourse.getId().toString());
+                intent.putExtra("CLASS_ID", classId);
                 startActivity(intent);
             });
 

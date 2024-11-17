@@ -63,8 +63,10 @@ public class EvaluationLab {
         ContentValues values = new ContentValues();
         values.put(AppDbSchema.EvaluationTable.Cols.UUID, evaluation.getId().toString());
         values.put(AppDbSchema.EvaluationTable.Cols.NAME, evaluation.getName());
-        values.put(String.valueOf(AppDbSchema.EvaluationTable.Cols.CLASSE), evaluation.getClasse());
-        values.put(String.valueOf(AppDbSchema.EvaluationTable.Cols.MAX_POINT), evaluation.getMaxPoint());
+        values.put(AppDbSchema.EvaluationTable.Cols.SCORE, evaluation.getScore());
+        values.put(AppDbSchema.EvaluationTable.Cols.COURSE_ID, evaluation.getCourseId());
+        values.put(AppDbSchema.EvaluationTable.Cols.MAX_POINT, evaluation.getMaxPoint());
+        values.put(AppDbSchema.EvaluationTable.Cols.IS_SUB_EVALUATION, evaluation.isSubEvaluation() ? 1 : 0);
         return values;
     }
 
