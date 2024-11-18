@@ -124,7 +124,7 @@ public class StudentGradesActivity extends AppCompatActivity {
                 String name = cursor.getString(cursor.getColumnIndex(AppDbSchema.EvaluationTable.Cols.NAME));
                 int maxPoint = cursor.getInt(cursor.getColumnIndex(AppDbSchema.EvaluationTable.Cols.MAX_POINT));
                 int score = cursor.getInt(cursor.getColumnIndex(AppDbSchema.EvaluationTable.Cols.SCORE));
-                int courseId = cursor.getInt(cursor.getColumnIndex(AppDbSchema.EvaluationTable.Cols.COURSE_ID));
+                String courseId = cursor.getString(cursor.getColumnIndex(AppDbSchema.EvaluationTable.Cols.COURSE_ID));
                 boolean isSubEvaluation = cursor.getInt(cursor.getColumnIndex(AppDbSchema.EvaluationTable.Cols.IS_SUB_EVALUATION)) == 1;
 
                 Evaluation evaluation = new Evaluation(UUID.fromString(uuidString));
