@@ -32,6 +32,8 @@ public class EditionEvaluationActivity extends AppCompatActivity {
 
     private LinearLayout evalList;
     private AppDatabaseHelper dbHelper;
+    private String currentCourseId;
+    private String courseName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,17 @@ public class EditionEvaluationActivity extends AppCompatActivity {
 
         dbHelper = new AppDatabaseHelper(this);
         evalList = findViewById(R.id.evalList);
+
+        currentCourseId = getIntent().getStringExtra("COURSE_ID");
+        courseName = getIntent().getStringExtra("COURSE_NAME");
+
+        if (currentCourseId == null || currentCourseId.isEmpty()) {
+            throw new IllegalArgumentException("COURSE_ID must be provided in the Intent");
+        }
+
+        Log.d("EditionEvaluationActivity", "COURSE_ID: " + currentCourseId);
+        Log.d("EditionEvaluationActivity", "COURSE_NAME: " + courseName);
+
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -92,8 +105,9 @@ public class EditionEvaluationActivity extends AppCompatActivity {
                 String name = nameInput.getText().toString();
                 String maxPoints = maxPointsInput.getText().toString();
                 String uuid = UUID.randomUUID().toString();
-                int courseId = getCourseId();
-                addEvaluation(isSubEvaluation, name, maxPoints, courseId, uuid);
+
+
+                addEvaluation(isSubEvaluation, name, maxPoints, currentCourseId, uuid);
             }
         });
 
@@ -107,14 +121,12 @@ public class EditionEvaluationActivity extends AppCompatActivity {
         builder.show();
     }
 
-    private void addEvaluation(boolean isSubEvaluation, String name, String maxPoints, int courseId, String uuid) {
-        int courseIdInt = Integer.parseInt(String.valueOf(courseId));
-
+    private void addEvaluation(boolean isSubEvaluation, String name, String maxPoints, String courseId, String uuid) {
         Evaluation evaluation = new Evaluation(UUID.fromString(uuid));
         evaluation.setName(name);
         evaluation.setScore(Integer.parseInt(maxPoints));
         evaluation.setMaxPoint(Integer.parseInt(maxPoints));
-        evaluation.setCourseId(courseIdInt);
+        evaluation.setCourseId(courseId);
         evaluation.setSubEvaluation(isSubEvaluation);
 
         EvaluationLab.get(this).addEvaluation(evaluation);
@@ -122,26 +134,10 @@ public class EditionEvaluationActivity extends AppCompatActivity {
         loadEvaluations();
     }
 
-    private int getCourseId() {
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.query(AppDbSchema.CourseTable.NAME,
-                new String[]{AppDbSchema.CourseTable.Cols.UUID},
-                null, null, null, null, null);
-        if (cursor != null && cursor.moveToFirst()) {
-            int columnIndex = cursor.getColumnIndex(AppDbSchema.CourseTable.Cols.UUID);
-            if (columnIndex != -1) {
-                int courseId = cursor.getInt(columnIndex);
-                cursor.close();
-                return courseId;
-            }
-        }
-        return -1;
-    }
-
     private void loadEvaluations() {
         evalList.removeAllViews();
 
-        List<Evaluation> evaluations = EvaluationLab.get(this).getEvaluations();
+        List<Evaluation> evaluations = EvaluationLab.get(this).getEvaluationsForCourse(currentCourseId);
         for (Evaluation evaluation : evaluations) {
             LinearLayout evaluationLayout = new LinearLayout(this);
             evaluationLayout.setOrientation(LinearLayout.HORIZONTAL);

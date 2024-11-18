@@ -13,7 +13,7 @@ public class EvaluationsCursorWrapper extends CursorWrapper {
     public Evaluation getEvaluation() {
         String uuidString= getString(getColumnIndex(AppDbSchema.EvaluationTable.Cols.UUID));
         String name= getString(getColumnIndex(AppDbSchema.EvaluationTable.Cols.NAME));
-        int courseId = getInt(getColumnIndex(AppDbSchema.EvaluationTable.Cols.COURSE_ID));
+        String courseId = getString(getColumnIndex(AppDbSchema.EvaluationTable.Cols.COURSE_ID));
         int maxPoint = getInt(getColumnIndex(AppDbSchema.EvaluationTable.Cols.MAX_POINT));
         int score = getInt(getColumnIndex(AppDbSchema.EvaluationTable.Cols.SCORE));
         boolean isSubEvaluation = getInt(getColumnIndex(AppDbSchema.EvaluationTable.Cols.IS_SUB_EVALUATION)) == 1;
