@@ -54,6 +54,18 @@ public class EvaluationActivity extends AppCompatActivity {
         displayStudents(students, courseId, classId);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        String classId = getIntent().getStringExtra("CLASS_ID");
+        String courseId = getIntent().getStringExtra("COURSE_ID");
+
+        List<Student> students = getStudentsFromDatabase(classId);
+        displayStudents(students, courseId, classId);
+    }
+
+
     private List<Student> getStudentsFromDatabase(String classId) {
         List<Student> students = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -103,6 +115,13 @@ public class EvaluationActivity extends AppCompatActivity {
                 studentTextView.setTextSize(18);
                 studentTextView.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
 
+                TextView averageTextView = new TextView(this);
+                double averageOn20 = calculateAverageOn20(student.getId().toString(), courseId);
+                averageTextView.setText(String.format("%.2f / 20", averageOn20));
+                averageTextView.setTextSize(18);
+                averageTextView.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
+                averageTextView.setPadding(8, 0, 8, 0);
+
                 ImageButton arrowButton = new ImageButton(this);
                 arrowButton.setImageResource(R.drawable.arrow_forward);
                 arrowButton.setContentDescription("Voir plus");
@@ -118,10 +137,46 @@ public class EvaluationActivity extends AppCompatActivity {
 
 
                 studentRow.addView(studentTextView);
+                studentRow.addView(averageTextView);
                 studentRow.addView(arrowButton);
 
                 studentListLayout.addView(studentRow);
             }
         }
     }
+
+    private double calculateAverageOn20(String studentId, String courseId) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery(
+                "SELECT e." + AppDbSchema.EvaluationTable.Cols.MAX_POINT + ", g." + AppDbSchema.GradeTable.Cols.SCORE +
+                        " FROM " + AppDbSchema.EvaluationTable.NAME + " e" +
+                        " LEFT JOIN " + AppDbSchema.GradeTable.NAME + " g" +
+                        " ON e." + AppDbSchema.EvaluationTable.Cols.UUID + " = g." + AppDbSchema.GradeTable.Cols.EVALUATION_ID +
+                        " WHERE e." + AppDbSchema.EvaluationTable.Cols.COURSE_ID + " = ? AND g." + AppDbSchema.GradeTable.Cols.STUDENT_ID + " = ?",
+                new String[]{courseId, studentId}
+        );
+
+        double totalScore = 0;
+        double totalMaxPoints = 0;
+
+        try {
+            while (cursor.moveToNext()) {
+                int maxPoint = cursor.getInt(cursor.getColumnIndexOrThrow(AppDbSchema.EvaluationTable.Cols.MAX_POINT));
+                int score = cursor.getInt(cursor.getColumnIndexOrThrow(AppDbSchema.GradeTable.Cols.SCORE));
+
+                totalScore += score;
+                totalMaxPoints += maxPoint;
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+
+        if (totalMaxPoints == 0) return 0;
+
+        return (totalScore / totalMaxPoints) * 20;
+    }
+
+
 }

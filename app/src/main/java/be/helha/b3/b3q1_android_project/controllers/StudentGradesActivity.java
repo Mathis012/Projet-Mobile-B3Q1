@@ -78,8 +78,17 @@ public class StudentGradesActivity extends AppCompatActivity {
                 String enteredScore = scoreInput.getText().toString();
                 if (!enteredScore.isEmpty()) {
                     int score = Integer.parseInt(enteredScore);
-                    scoreDisplay.setText(String.format("%d / %d", score, evaluation.getMaxPoint()));
-                    saveGrade(evaluation.getId().toString(), enteredScore, studentId);
+                    if (score > evaluation.getMaxPoint()) {
+                        scoreInput.setError("Score cannot exceed " + evaluation.getMaxPoint());
+                    } else {
+                        scoreDisplay.setText(String.format("%d / %d", score, evaluation.getMaxPoint()));
+                        saveGrade(evaluation.getId().toString(), enteredScore, studentId);
+
+                        // Log to confirm saving
+                        Log.d("StudentGradesActivity", "Score saved: " + enteredScore);
+
+                        // Optionally close database here or keep it managed globally
+                    }
                 }
             });
 
