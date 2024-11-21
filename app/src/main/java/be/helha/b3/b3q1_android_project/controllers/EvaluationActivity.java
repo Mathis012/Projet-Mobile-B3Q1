@@ -46,11 +46,12 @@ public class EvaluationActivity extends AppCompatActivity {
             Intent intent = new Intent(EvaluationActivity.this, EditionEvaluationActivity.class);
             intent.putExtra("CLASS_ID", classId);
             intent.putExtra("COURSE_ID", courseId);
+            intent.putExtra("COURSE_NAME", courseName);
             startActivity(intent);
         });
 
         List<Student> students = getStudentsFromDatabase(classId);
-        displayStudents(students);
+        displayStudents(students, courseId, classId);
     }
 
     private List<Student> getStudentsFromDatabase(String classId) {
@@ -80,7 +81,7 @@ public class EvaluationActivity extends AppCompatActivity {
         return students;
     }
 
-    private void displayStudents(List<Student> students) {
+    private void displayStudents(List<Student> students, String courseId, String classId) {
         LinearLayout studentListLayout = findViewById(R.id.studentListEvaluation);
         studentListLayout.removeAllViews();
 
@@ -110,6 +111,8 @@ public class EvaluationActivity extends AppCompatActivity {
                 arrowButton.setOnClickListener(v -> {
                     Intent intent = new Intent(EvaluationActivity.this, StudentGradesActivity.class);
                     intent.putExtra("STUDENT_ID", student.getId().toString());
+                    intent.putExtra("COURSE_ID", courseId);
+                    intent.putExtra("CLASS_ID", classId);
                     startActivity(intent);
                 });
 

@@ -7,7 +7,7 @@ public class Evaluation {
     private UUID mId;
     private Integer mMaxPoint;
     private Integer mScore;
-    private Integer mCourseId;
+    private String mCourseId;
     private boolean mSubEvaluation;
 
     public Evaluation(UUID id) {
@@ -23,7 +23,7 @@ public class Evaluation {
 
     public Integer getScore() {return mScore;}
 
-    public Integer getCourseId() {return mCourseId;}
+    public String getCourseId() {return mCourseId;}
 
     public boolean isSubEvaluation() {return mSubEvaluation;}
 
@@ -33,7 +33,7 @@ public class Evaluation {
 
     public void setScore(Integer score) {mScore = score;}
 
-    public void setCourseId(Integer courseId) {mCourseId = courseId;}
+    public void setCourseId(String courseId) {mCourseId = courseId;}
 
     public void setSubEvaluation(boolean subEvaluation) {mSubEvaluation = subEvaluation;}
 }

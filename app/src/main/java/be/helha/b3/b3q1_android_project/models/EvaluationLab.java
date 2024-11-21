@@ -79,4 +79,21 @@ public class EvaluationLab {
                 null, null, null
         ));
     }
+
+    public List<Evaluation> getEvaluationsForCourse(String courseId) {
+        List<Evaluation> evaluations = new ArrayList<>();
+        EvaluationsCursorWrapper cursor = queryEvaluations(AppDbSchema.EvaluationTable.Cols.COURSE_ID + " = ?",
+                new String[]{String.valueOf(courseId)});
+        try {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                evaluations.add(cursor.getEvaluation());
+                cursor.moveToNext();
+            }
+        } finally {
+            cursor.close();
+        }
+        return evaluations;
+    }
+
 }
