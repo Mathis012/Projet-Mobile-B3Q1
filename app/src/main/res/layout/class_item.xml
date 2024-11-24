@@ -2,18 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:padding="8dp">
-
-    <ImageButton
-        android:id="@+id/modifButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:contentDescription="@string/modification"
-        android:src="@drawable/ic_pen"
-        tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
         android:id="@+id/className"
@@ -32,42 +22,49 @@
         android:visibility="gone" />
 
     <ImageButton
+        android:id="@+id/modifButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_pen"
+        android:contentDescription="@string/modification"
+        android:background="@drawable/button_background"
+        android:layout_marginStart="8dp" />
+
+    <ImageButton
         android:id="@+id/courseButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:contentDescription="@string/course"
         android:src="@drawable/ic_paper"
-        tools:ignore="TouchTargetSizeCheck" />
+        android:contentDescription="@string/course"
+        android:background="@drawable/button_background"
+        android:layout_marginStart="8dp" />
 
     <ImageButton
         android:id="@+id/studentButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:contentDescription="@string/person"
         android:src="@drawable/ic_person"
-        tools:ignore="TouchTargetSizeCheck" />
+        android:contentDescription="@string/person"
+        android:background="@drawable/button_background"
+        android:layout_marginStart="8dp"/>
 
     <ImageButton
-        android:id="@+id/trashButton"
+        android:id="@+id/deleteButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:contentDescription="@string/delete"
         android:src="@drawable/ic_trash"
-        android:visibility="gone"
-        tools:ignore="TouchTargetSizeCheck" />
+        android:contentDescription="@string/delete"
+        android:background="@drawable/button_background"
+        android:layout_marginStart="8dp"/>
 
     <ImageButton
         android:id="@+id/checkButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:contentDescription="@string/confirm"
         android:src="@drawable/ic_check"
-        android:visibility="gone"
-        tools:ignore="TouchTargetSizeCheck" />
+        android:contentDescription="@string/confirm"
+        android:background="@drawable/button_background"
+        android:layout_marginStart="8dp"
+        android:visibility="gone" />
+
 </LinearLayout>

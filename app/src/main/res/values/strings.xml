@@ -22,5 +22,8 @@
     <string name="studentName">Student Name</string>
     <string name="aAddStudent">Ajouter des Etudiants</string>
     <string name="ajout_notes">Ajouter des notes</string>
+    <string name="classes">Classes</string>
+    <string name="add">Add</string>
+    <string name="classe">Classes</string>
 
 </resources>
