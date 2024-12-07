@@ -1,11 +1,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="horizontal"
+    android:padding="8dp">
 
     <EditText
-        android:id="@+id/studentNameEdit"
-        android:layout_width="match_parent"
+        android:id="@+id/studentName"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Student Name" />
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:padding="8dp"
+        android:hint="@string/student_name"/>
 </LinearLayout>

@@ -18,7 +18,7 @@ import be.helha.b3.b3q1_android_project.R;
 import be.helha.b3.b3q1_android_project.adapters.ClassAdapter;
 import be.helha.b3.b3q1_android_project.controllers.CourseActivity;
 import be.helha.b3.b3q1_android_project.controllers.StudentActivity;
-import be.helha.b3.b3q1_android_project.repositories.ClassesRepository;
+import be.helha.b3.b3q1_android_project.repositories.ClassRepository;
 import be.helha.b3.b3q1_android_project.models.ClassModel;
 
 /**
@@ -27,7 +27,7 @@ import be.helha.b3.b3q1_android_project.models.ClassModel;
 public class ClassListFragment extends Fragment {
     private RecyclerView recyclerView;
     private ClassAdapter adapter;
-    private ClassesRepository repository;
+    private ClassRepository repository;
 
     /**
      * Called to have the fragment instantiate its user interface view.
@@ -43,7 +43,7 @@ public class ClassListFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        repository = new ClassesRepository(requireContext());
+        repository = new ClassRepository(requireContext());
         refreshClasses();
 
         ImageButton addButton = view.findViewById(R.id.addButton);

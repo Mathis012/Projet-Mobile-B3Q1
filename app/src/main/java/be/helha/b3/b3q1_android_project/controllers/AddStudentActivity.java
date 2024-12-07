@@ -54,7 +54,7 @@ public class AddStudentActivity extends AppCompatActivity {
 
     private void addNewStudentInput() {
         View studentView = getLayoutInflater().inflate(R.layout.student_item, studentListLayout, false);
-        EditText studentNameEdit = studentView.findViewById(R.id.studentNameEdit);
+        EditText studentNameEdit = studentView.findViewById(R.id.studentName);
         studentNameEdits.add(studentNameEdit);
         studentListLayout.addView(studentView);
     }
