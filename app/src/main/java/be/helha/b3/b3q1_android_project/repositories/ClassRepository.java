@@ -16,14 +16,14 @@ import be.helha.b3.b3q1_android_project.models.ClassModel;
 /**
  * ClassesRepository is responsible for managing the database operations related to ClassModel.
  */
-public class ClassesRepository {
+public class ClassRepository {
     private final SQLiteDatabase database;
 
     /**
      * Constructor for the ClassesRepository.
      * @param context The application context.
      */
-    public ClassesRepository(Context context) {
+    public ClassRepository(Context context) {
         AppDatabaseHelper dbHelper = new AppDatabaseHelper(context);
         this.database = dbHelper.getWritableDatabase();
     }
