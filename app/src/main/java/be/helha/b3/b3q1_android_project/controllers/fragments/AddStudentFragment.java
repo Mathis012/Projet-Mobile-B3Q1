@@ -23,11 +23,21 @@ import be.helha.b3.b3q1_android_project.adapters.AddStudentAdapter;
 import be.helha.b3.b3q1_android_project.db.AppDatabaseHelper;
 import be.helha.b3.b3q1_android_project.db.AppDbSchema;
 
+/**
+ * Fragment for adding students to a class.
+ */
 public class AddStudentFragment extends Fragment {
     private RecyclerView recyclerView;
     private AddStudentAdapter adapter;
     private String classId;
 
+    /**
+     * Called to have the fragment instantiate its user interface view.
+     * @param inflater           The LayoutInflater object that can be used to inflate any views in the fragment.
+     * @param container          If non-null, this is the parent view that the fragment's UI should be attached to.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous saved state as given here.
+     * @return Return the View for the fragment's UI, or null.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_student, container, false);
@@ -52,6 +62,9 @@ public class AddStudentFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Saves the list of students to the database.
+     */
     private void saveStudents() {
         List<String> studentNames = adapter.getStudentNames();
         if (classId == null) {

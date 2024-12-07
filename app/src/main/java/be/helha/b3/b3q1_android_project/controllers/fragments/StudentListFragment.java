@@ -22,13 +22,22 @@ import be.helha.b3.b3q1_android_project.controllers.AddStudentActivity;
 import be.helha.b3.b3q1_android_project.models.Student;
 import be.helha.b3.b3q1_android_project.repositories.StudentRepository;
 
+/**
+ * Fragment for displaying a list of students in a class.
+ */
 public class StudentListFragment extends Fragment {
     private RecyclerView recyclerView;
     private StudentAdapter adapter;
     private StudentRepository repository;
-
     private String classId;
 
+    /**
+     * Called to have the fragment instantiate its user interface view.
+     * @param inflater           The LayoutInflater object that can be used to inflate any views in the fragment.
+     * @param container          If non-null, this is the parent view that the fragment's UI should be attached to.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous saved state as given here.
+     * @return Return the View for the fragment's UI, or null.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_student_list, container, false);
@@ -52,6 +61,9 @@ public class StudentListFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Refreshes the list of students from the repository.
+     */
     private void refreshStudents() {
         List<Student> students = repository.getStudentsForClass(classId);
         if (adapter == null) {
@@ -62,6 +74,9 @@ public class StudentListFragment extends Fragment {
         }
     }
 
+    /**
+     * Called when the fragment is visible to the user and actively running.
+     */
     @Override
     public void onResume() {
         super.onResume();
