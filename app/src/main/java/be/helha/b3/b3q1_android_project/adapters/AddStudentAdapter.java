@@ -14,18 +14,32 @@ import java.util.List;
 
 import be.helha.b3.b3q1_android_project.R;
 
+/**
+ * Adapter class for adding student names in a RecyclerView.
+ */
 public class AddStudentAdapter extends RecyclerView.Adapter<AddStudentAdapter.ViewHolder> {
     private final List<String> studentNames;
 
+    /**
+     * Constructor for AddStudentAdapter.
+     * @param studentNames List of student names.
+     */
     public AddStudentAdapter(List<String> studentNames) {
         this.studentNames = studentNames;
     }
 
+    /**
+     * Adds a new student to the list.
+     */
     public void addStudent() {
         studentNames.add("");
         notifyItemInserted(studentNames.size() - 1);
     }
 
+    /**
+     * Returns the list of student names.
+     * @return List of student names.
+     */
     public List<String> getStudentNames() {
         return studentNames;
     }
@@ -47,16 +61,28 @@ public class AddStudentAdapter extends RecyclerView.Adapter<AddStudentAdapter.Vi
         return studentNames.size();
     }
 
+    /**
+     * ViewHolder class for student name items.
+     */
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final EditText studentNameEdit;
         private final List<String> studentNames;
 
+        /**
+         * Constructor for ViewHolder.
+         * @param itemView The view of the student name item.
+         * @param studentNames List of student names.
+         */
         public ViewHolder(View itemView, List<String> studentNames) {
             super(itemView);
             this.studentNameEdit = itemView.findViewById(R.id.studentName);
             this.studentNames = studentNames;
         }
 
+        /**
+         * Binds the student name to the EditText and sets up a TextWatcher.
+         * @param studentName The name of the student.
+         */
         public void bind(String studentName) {
             studentNameEdit.setText(studentName);
             studentNameEdit.clearFocus();

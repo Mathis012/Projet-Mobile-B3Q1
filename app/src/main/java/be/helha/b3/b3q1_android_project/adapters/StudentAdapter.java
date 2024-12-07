@@ -13,13 +13,24 @@ import java.util.List;
 import be.helha.b3.b3q1_android_project.R;
 import be.helha.b3.b3q1_android_project.models.Student;
 
+/**
+ * Adapter class for displaying a list of students in a RecyclerView.
+ */
 public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHolder> {
     private List<Student> students;
 
+    /**
+     * Constructor for StudentAdapter.
+     * @param students List of students to display.
+     */
     public StudentAdapter(List<Student> students) {
         this.students = students;
     }
 
+    /**
+     * Sets the list of students to display.
+     * @param students List of students.
+     */
     public void setItems(List<Student> students) {
         this.students = students;
         notifyDataSetChanged();
@@ -43,9 +54,16 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
         return students.size();
     }
 
+    /**
+     * ViewHolder class for student items.
+     */
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView studentName;
 
+        /**
+         * Constructor for ViewHolder.
+         * @param itemView The view of the student item.
+         */
         public ViewHolder(View itemView) {
             super(itemView);
             studentName = itemView.findViewById(R.id.studentName);
