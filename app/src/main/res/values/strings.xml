@@ -27,5 +27,8 @@
     <string name="classe">Classes</string>
     <string name="student_name">Student Name</string>
     <string name="save" />
+    <string name="edit_evaluation">Edit Evaluation</string>
+    <string name="evaluation">Evaluation</string>
+    <string name="evaluation_name">Evaluation Name</string>
 
 </resources>

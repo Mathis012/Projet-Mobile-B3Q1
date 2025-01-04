@@ -33,8 +33,9 @@ public class AppDatabaseHelper extends SQLiteOpenHelper {
                 AppDbSchema.EvaluationTable.Cols.NAME + " TEXT, " +
                 AppDbSchema.EvaluationTable.Cols.SCORE + " INTEGER, " +
                 AppDbSchema.EvaluationTable.Cols.MAX_POINT + " INTEGER, " +
-                AppDbSchema.EvaluationTable.Cols.COURSE_ID + " INTEGER," +
-                AppDbSchema.EvaluationTable.Cols.IS_SUB_EVALUATION + " INTEGER" +
+                AppDbSchema.EvaluationTable.Cols.COURSE_ID + " INTEGER, " +
+                AppDbSchema.EvaluationTable.Cols.IS_SUB_EVALUATION + " INTEGER, " +
+                AppDbSchema.EvaluationTable.Cols.PARENT_EVALUATION_ID + " TEXT" +
                 ")");
 
         db.execSQL("CREATE TABLE " + AppDbSchema.StudentTable.NAME + "(" +
@@ -58,6 +59,9 @@ public class AppDatabaseHelper extends SQLiteOpenHelper {
         if (oldVersion < 8) {
             db.execSQL("ALTER TABLE " + AppDbSchema.EvaluationTable.NAME +
                     " ADD COLUMN " + AppDbSchema.EvaluationTable.Cols.IS_SUB_EVALUATION + " INTEGER");
+
+            db.execSQL("ALTER TABLE " + AppDbSchema.EvaluationTable.NAME +
+                    " ADD COLUMN " + AppDbSchema.EvaluationTable.Cols.PARENT_EVALUATION_ID + " TEXT");
 
             db.execSQL("CREATE TABLE " + AppDbSchema.GradeTable.NAME + "(" +
                     " _id INTEGER PRIMARY KEY AUTOINCREMENT, " +

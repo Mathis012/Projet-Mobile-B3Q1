@@ -32,6 +32,7 @@ public final class AppDbSchema {
             public static final String MAX_POINT = "max_point";
             public static final String IS_SUB_EVALUATION = "is_sub_evaluation";
             public static final String COURSE_ID = "course_id"; // Clé étrangère vers la table Course
+            public static final String PARENT_EVALUATION_ID = "parent_evaluation_id";
         }
     }
 
