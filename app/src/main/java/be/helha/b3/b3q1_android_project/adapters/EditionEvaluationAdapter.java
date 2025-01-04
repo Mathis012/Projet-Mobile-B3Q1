@@ -36,11 +36,35 @@ public class EditionEvaluationAdapter extends RecyclerView.Adapter<EditionEvalua
         Evaluation evaluation = evaluations.get(position);
         holder.evaluationScore.setText(String.valueOf(evaluation.getScore()));
         holder.evaluationName.setText(evaluation.getName());
+
+        int level = getLevel(evaluation);
+        holder.itemView.setPadding(level * 50, 0, 0, 0);
     }
 
     @Override
     public int getItemCount() {
         return evaluations.size();
+    }
+
+    private int getLevel(Evaluation evaluation) {
+        int level = 0;
+        String parentId = evaluation.getParentEvaluationId();
+        while (parentId != null) {
+            level++;
+            Evaluation parent = findParentById(parentId);
+            if (parent == null) break;
+            parentId = parent.getParentEvaluationId();
+        }
+        return level;
+    }
+
+    private Evaluation findParentById(String parentId) {
+        for (Evaluation eval : evaluations) {
+            if (eval.getId().toString().equals(parentId)) {
+                return eval;
+            }
+        }
+        return null;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
