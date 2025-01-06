@@ -23,6 +23,9 @@ import be.helha.b3.b3q1_android_project.db.AppDatabaseHelper;
 import be.helha.b3.b3q1_android_project.models.Evaluation;
 import be.helha.b3.b3q1_android_project.models.EvaluationLab;
 
+/**
+ * Fragment for managing and displaying evaluations for a specific course.
+ */
 public class EditionEvaluationFragment extends Fragment {
 
     private RecyclerView evalList;
@@ -30,6 +33,13 @@ public class EditionEvaluationFragment extends Fragment {
     private String currentCourseId;
     private String courseName;
 
+    /**
+     * Called to have the fragment instantiate its user interface view.
+     * @param inflater The LayoutInflater object that can be used to inflate any views in the fragment.
+     * @param container If non-null, this is the parent view that the fragment's UI should be attached to.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous saved state as given here.
+     * @return Return the View for the fragment's UI, or null.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edition_evaluation, container, false);
@@ -52,13 +62,19 @@ public class EditionEvaluationFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Loads the evaluations for the current course and sets the adapter for the RecyclerView.
+     * @param evalList The RecyclerView to set the adapter on.
+     */
     private void loadEvaluations(RecyclerView evalList) {
         List<Evaluation> evaluations = EvaluationLab.get(getContext()).getEvaluationsForCourse(currentCourseId);
         EditionEvaluationAdapter adapter = new EditionEvaluationAdapter(getContext(), evaluations);
         evalList.setAdapter(adapter);
     }
 
-
+    /**
+     * Shows a dialog to choose the type of evaluation to add.
+     */
     private void showAddDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Choisir le type");
@@ -75,6 +91,9 @@ public class EditionEvaluationFragment extends Fragment {
         builder.show();
     }
 
+    /**
+     * Shows a dialog to select a parent evaluation for a sub-evaluation.
+     */
     private void showEvaluationSelectionDialog() {
         List<Evaluation> allEvaluations = EvaluationLab.get(getContext()).getEvaluationsForCourse(currentCourseId);
 
@@ -92,6 +111,14 @@ public class EditionEvaluationFragment extends Fragment {
         builder.show();
     }
 
+    /**
+     * Builds a hierarchical display of evaluations for selection.
+     * @param evaluations The list of evaluations.
+     * @param parentId The ID of the parent evaluation.
+     * @param displayNames The list of display names.
+     * @param levelMap The map of levels.
+     * @param level The current level.
+     */
     private void buildHierarchicalDisplay(List<Evaluation> evaluations, String parentId, List<String> displayNames, Map<Integer, Evaluation> levelMap, int level) {
         for (Evaluation eval : evaluations) {
             if ((parentId == null && eval.getParentEvaluationId() == null) ||
@@ -106,6 +133,11 @@ public class EditionEvaluationFragment extends Fragment {
         }
     }
 
+    /**
+     * Shows a dialog to input the name and score for a new evaluation.
+     * @param isSubEvaluation Whether the evaluation is a sub-evaluation.
+     * @param parentEvaluationId The ID of the parent evaluation.
+     */
     private void showNameAndScoreInputDialog(boolean isSubEvaluation, String parentEvaluationId) {
         LayoutInflater inflater = getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_add_evaluation, null);
@@ -130,6 +162,16 @@ public class EditionEvaluationFragment extends Fragment {
         builder.show();
     }
 
+    /**
+     * Adds a new evaluation to the database and refreshes the list.
+     * @param isSubEvaluation Whether the evaluation is a sub-evaluation.
+     * @param name The name of the evaluation.
+     * @param maxPoints The maximum points for the evaluation.
+     * @param courseId The ID of the course.
+     * @param uuid The UUID of the evaluation.
+     * @param parentEvaluationId The ID of the parent evaluation.
+     * @param evalList The RecyclerView to refresh.
+     */
     private void addEvaluation(boolean isSubEvaluation, String name, String maxPoints, String courseId, String uuid, String parentEvaluationId, RecyclerView evalList) {
         Evaluation evaluation = new Evaluation(UUID.fromString(uuid));
         evaluation.setName(name);

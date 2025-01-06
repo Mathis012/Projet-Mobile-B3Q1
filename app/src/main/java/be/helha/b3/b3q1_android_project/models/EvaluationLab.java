@@ -13,11 +13,19 @@ import be.helha.b3.b3q1_android_project.db.AppDatabaseHelper;
 import be.helha.b3.b3q1_android_project.db.AppDbSchema;
 import be.helha.b3.b3q1_android_project.db.EvaluationsCursorWrapper;
 
+/**
+ * Singleton class that manages the database operations for Evaluation objects.
+ */
 public class EvaluationLab {
     private static EvaluationLab sEvaluationLab;
     private Context mContext;
     private SQLiteDatabase mDatabase;
 
+    /**
+     * Returns the singleton instance of EvaluationLab.
+     * @param context The application context.
+     * @return The singleton instance of EvaluationLab.
+     */
     public static EvaluationLab get(Context context) {
         if (sEvaluationLab == null) {
             sEvaluationLab = new EvaluationLab(context);
@@ -25,15 +33,28 @@ public class EvaluationLab {
         return sEvaluationLab;
     }
 
+    /**
+     * Private constructor to prevent direct instantiation.
+     * @param context The application context.
+     */
     private EvaluationLab(Context context) {
         mContext = context.getApplicationContext();
         mDatabase = new AppDatabaseHelper(mContext).getWritableDatabase();
     }
 
+    /**
+     * Adds an Evaluation to the database.
+     * @param evaluation The Evaluation to add.
+     */
     public void addEvaluation(Evaluation evaluation) {
         mDatabase.insert(AppDbSchema.EvaluationTable.NAME, null, getContentValues(evaluation));
     }
 
+    /**
+     * Converts an Evaluation object to ContentValues.
+     * @param evaluation The Evaluation to convert.
+     * @return The ContentValues representing the Evaluation.
+     */
     private ContentValues getContentValues(Evaluation evaluation) {
         ContentValues values = new ContentValues();
         values.put(AppDbSchema.EvaluationTable.Cols.UUID, evaluation.getId().toString());
@@ -46,6 +67,12 @@ public class EvaluationLab {
         return values;
     }
 
+    /**
+     * Queries the database for Evaluations matching the given criteria.
+     * @param whereClause The SQL WHERE clause.
+     * @param whereArgs The arguments for the WHERE clause.
+     * @return A wrapper for the resulting cursor.
+     */
     private EvaluationsCursorWrapper queryEvaluations(String whereClause, String[] whereArgs) {
         return new EvaluationsCursorWrapper(mDatabase.query(
                 AppDbSchema.EvaluationTable.NAME,
@@ -56,6 +83,11 @@ public class EvaluationLab {
         ));
     }
 
+    /**
+     * Retrieves a list of Evaluations for a given course.
+     * @param courseId The ID of the course.
+     * @return A list of Evaluations for the course.
+     */
     public List<Evaluation> getEvaluationsForCourse(String courseId) {
         List<Evaluation> evaluations = new ArrayList<>();
         EvaluationsCursorWrapper cursor = queryEvaluations(
@@ -97,6 +129,11 @@ public class EvaluationLab {
         return flattenedEvaluations;
     }
 
+    /**
+     * Recursively adds an Evaluation and its sub-evaluations to a list.
+     * @param list The list to add to.
+     * @param evaluation The Evaluation to add.
+     */
     private void addEvaluationAndSubEvaluations(List<Evaluation> list, Evaluation evaluation) {
         list.add(evaluation);
         for (Evaluation subEval : evaluation.getSubEvaluations()) {

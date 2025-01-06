@@ -26,10 +26,20 @@ import be.helha.b3.b3q1_android_project.db.AppDatabaseHelper;
 import be.helha.b3.b3q1_android_project.db.AppDbSchema;
 import be.helha.b3.b3q1_android_project.models.Student;
 
+/**
+ * Fragment for displaying and managing evaluations for a specific course.
+ */
 public class EvaluationFragment extends Fragment {
 
     private AppDatabaseHelper dbHelper;
 
+    /**
+     * Called to have the fragment instantiate its user interface view.
+     * @param inflater The LayoutInflater object that can be used to inflate any views in the fragment.
+     * @param container If non-null, this is the parent view that the fragment's UI should be attached to.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous saved state as given here.
+     * @return Return the View for the fragment's UI, or null.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_evaluation, container, false);
@@ -61,6 +71,9 @@ public class EvaluationFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Called when the fragment is visible to the user and actively running.
+     */
     @Override
     public void onResume() {
         super.onResume();
@@ -72,6 +85,11 @@ public class EvaluationFragment extends Fragment {
         displayStudents(getView(), students, courseId, classId);
     }
 
+    /**
+     * Retrieves the list of students from the database for a specific class.
+     * @param classId The ID of the class.
+     * @return The list of students.
+     */
     private List<Student> getStudentsFromDatabase(String classId) {
         List<Student> students = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -99,7 +117,13 @@ public class EvaluationFragment extends Fragment {
         return students;
     }
 
-
+    /**
+     * Displays the list of students in a RecyclerView.
+     * @param view The view containing the RecyclerView.
+     * @param students The list of students to display.
+     * @param courseId The ID of the course.
+     * @param classId The ID of the class.
+     */
     private void displayStudents(View view, List<Student> students, String courseId, String classId) {
         RecyclerView recyclerView = view.findViewById(R.id.studentListEvaluation);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -107,6 +131,12 @@ public class EvaluationFragment extends Fragment {
         recyclerView.setAdapter(adapter);
     }
 
+    /**
+     * Calculates the average score of a student for a specific course on a scale of 20.
+     * @param studentId The ID of the student.
+     * @param courseId The ID of the course.
+     * @return The average score on a scale of 20.
+     */
     private double calculateAverageOn20(String studentId, String courseId) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cursor = db.rawQuery(
