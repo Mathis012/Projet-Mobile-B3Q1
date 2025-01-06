@@ -14,16 +14,30 @@ import java.util.List;
 import be.helha.b3.b3q1_android_project.R;
 import be.helha.b3.b3q1_android_project.models.Evaluation;
 
+/**
+ * Adapter class for displaying a list of evaluations in a RecyclerView.
+ */
 public class EditionEvaluationAdapter extends RecyclerView.Adapter<EditionEvaluationAdapter.ViewHolder> {
 
     private List<Evaluation> evaluations;
     private LayoutInflater inflater;
 
+    /**
+     * Constructor for the EditionEvaluationAdapter.
+     * @param context The context in which the adapter is used.
+     * @param evaluations The list of evaluations to display.
+     */
     public EditionEvaluationAdapter(Context context, List<Evaluation> evaluations) {
         this.evaluations = evaluations;
         this.inflater = LayoutInflater.from(context);
     }
 
+    /**
+     * Creates a new ViewHolder instance.
+     * @param parent The parent view.
+     * @param viewType The view type.
+     * @return A new ViewHolder instance.
+     */
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -31,6 +45,11 @@ public class EditionEvaluationAdapter extends RecyclerView.Adapter<EditionEvalua
         return new ViewHolder(view);
     }
 
+    /**
+     * Binds the data to the ViewHolder.
+     * @param holder The ViewHolder instance.
+     * @param position The position of the item in the list.
+     */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Evaluation evaluation = evaluations.get(position);
@@ -41,11 +60,20 @@ public class EditionEvaluationAdapter extends RecyclerView.Adapter<EditionEvalua
         holder.itemView.setPadding(level * 50, 0, 0, 0);
     }
 
+    /**
+     * Gets the number of items in the list.
+     * @return The number of items in the list.
+     */
     @Override
     public int getItemCount() {
         return evaluations.size();
     }
 
+    /**
+     * Calculates the hierarchical level of an evaluation.
+     * @param evaluation The evaluation to calculate the level for.
+     * @return The hierarchical level of the evaluation.
+     */
     private int getLevel(Evaluation evaluation) {
         int level = 0;
         String parentId = evaluation.getParentEvaluationId();
@@ -58,6 +86,11 @@ public class EditionEvaluationAdapter extends RecyclerView.Adapter<EditionEvalua
         return level;
     }
 
+    /**
+     * Finds the parent evaluation by its ID.
+     * @param parentId The ID of the parent evaluation.
+     * @return The parent evaluation, or null if not found.
+     */
     private Evaluation findParentById(String parentId) {
         for (Evaluation eval : evaluations) {
             if (eval.getId().toString().equals(parentId)) {
@@ -67,10 +100,17 @@ public class EditionEvaluationAdapter extends RecyclerView.Adapter<EditionEvalua
         return null;
     }
 
+    /**
+     * ViewHolder class for the EditionEvaluationAdapter.
+     */
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView evaluationScore;
         TextView evaluationName;
 
+        /**
+         * Constructor for the ViewHolder.
+         * @param itemView The view for the evaluation item.
+         */
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             evaluationScore = itemView.findViewById(R.id.evaluationScore);

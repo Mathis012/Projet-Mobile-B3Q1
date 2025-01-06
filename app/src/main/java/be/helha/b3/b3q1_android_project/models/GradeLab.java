@@ -13,16 +13,28 @@ import be.helha.b3.b3q1_android_project.db.AppDatabaseHelper;
 import be.helha.b3.b3q1_android_project.db.AppDbSchema;
 import be.helha.b3.b3q1_android_project.db.StudentGradesCursorWrapper;
 
+/**
+ * Singleton class that manages the database operations for Grade objects.
+ */
 public class GradeLab {
     private static GradeLab sGradeLab;
     private final Context mContext;
     private final SQLiteDatabase mDatabase;
 
+    /**
+     * Private constructor to prevent direct instantiation.
+     * @param context The application context.
+     */
     private GradeLab(Context context) {
         mContext = context.getApplicationContext();
         mDatabase = new AppDatabaseHelper(mContext).getWritableDatabase();
     }
 
+    /**
+     * Returns the singleton instance of GradeLab.
+     * @param context The application context.
+     * @return The singleton instance of GradeLab.
+     */
     public static GradeLab get(Context context) {
         if (sGradeLab == null) {
             sGradeLab = new GradeLab(context);
@@ -30,11 +42,20 @@ public class GradeLab {
         return sGradeLab;
     }
 
+    /**
+     * Adds a Grade to the database.
+     * @param grade The Grade to add.
+     */
     public void addGrade(Grade grade) {
         ContentValues values = getContentValues(grade);
         mDatabase.insert(AppDbSchema.GradeTable.NAME, null, values);
     }
 
+    /**
+     * Retrieves a list of Grades for a given student.
+     * @param studentId The ID of the student.
+     * @return A list of Grades for the student.
+     */
     public List<Grade> getGradesForStudent(UUID studentId) {
         List<Grade> grades = new ArrayList<>();
         try (StudentGradesCursorWrapper cursor = queryGrades(
@@ -48,6 +69,11 @@ public class GradeLab {
         return grades;
     }
 
+    /**
+     * Retrieves a list of Grades for a given evaluation.
+     * @param evaluationId The ID of the evaluation.
+     * @return A list of Grades for the evaluation.
+     */
     public List<Grade> getGradesForEvaluation(UUID evaluationId) {
         List<Grade> grades = new ArrayList<>();
         try (StudentGradesCursorWrapper cursor = queryGrades(
@@ -61,6 +87,10 @@ public class GradeLab {
         return grades;
     }
 
+    /**
+     * Updates a Grade in the database.
+     * @param grade The Grade to update.
+     */
     public void updateGrade(Grade grade) {
         String uuidString = grade.getId().toString();
         ContentValues values = getContentValues(grade);
@@ -70,6 +100,12 @@ public class GradeLab {
                 new String[]{uuidString});
     }
 
+    /**
+     * Queries the database for Grades matching the given criteria.
+     * @param whereClause The SQL WHERE clause.
+     * @param whereArgs The arguments for the WHERE clause.
+     * @return A wrapper for the resulting cursor.
+     */
     private StudentGradesCursorWrapper queryGrades(String whereClause, String[] whereArgs) {
         Cursor cursor = mDatabase.query(
                 AppDbSchema.GradeTable.NAME,
@@ -83,6 +119,11 @@ public class GradeLab {
         return new StudentGradesCursorWrapper(cursor);
     }
 
+    /**
+     * Converts a Grade object to ContentValues.
+     * @param grade The Grade to convert.
+     * @return The ContentValues representing the Grade.
+     */
     private ContentValues getContentValues(Grade grade) {
         ContentValues values = new ContentValues();
         values.put(AppDbSchema.GradeTable.Cols.UUID, grade.getId().toString());

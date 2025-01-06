@@ -20,6 +20,9 @@ import be.helha.b3.b3q1_android_project.db.AppDatabaseHelper;
 import be.helha.b3.b3q1_android_project.db.AppDbSchema;
 import be.helha.b3.b3q1_android_project.models.Evaluation;
 
+/**
+ * Adapter class for displaying and managing evaluation grades in a RecyclerView.
+ */
 public class EvaluationGradesAdapter extends RecyclerView.Adapter<EvaluationGradesAdapter.ViewHolder> {
 
     private Context context;
@@ -27,6 +30,12 @@ public class EvaluationGradesAdapter extends RecyclerView.Adapter<EvaluationGrad
     private String studentId;
     private AppDatabaseHelper dbHelper;
 
+    /**
+     * Constructor for the EvaluationGradesAdapter.
+     * @param context The context in which the adapter is used.
+     * @param evaluations The list of evaluations to display.
+     * @param studentId The ID of the student.
+     */
     public EvaluationGradesAdapter(Context context, List<Evaluation> evaluations, String studentId) {
         this.context = context;
         this.evaluations = evaluations;
@@ -34,12 +43,23 @@ public class EvaluationGradesAdapter extends RecyclerView.Adapter<EvaluationGrad
         this.dbHelper = new AppDatabaseHelper(context);
     }
 
+    /**
+     * Creates a new ViewHolder instance.
+     * @param parent The parent view.
+     * @param viewType The view type.
+     * @return A new ViewHolder instance.
+     */
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_grades_evaluation, parent, false);
         return new ViewHolder(view);
     }
 
+    /**
+     * Binds the data to the ViewHolder.
+     * @param holder The ViewHolder instance.
+     * @param position The position of the item in the list.
+     */
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Evaluation evaluation = evaluations.get(position);
@@ -63,11 +83,21 @@ public class EvaluationGradesAdapter extends RecyclerView.Adapter<EvaluationGrad
         });
     }
 
+    /**
+     * Returns the total number of items in the data set held by the adapter.
+     * @return The total number of items in this adapter.
+     */
     @Override
     public int getItemCount() {
         return evaluations.size();
     }
 
+    /**
+     * Saves the grade for a specific evaluation and student.
+     * @param evaluationId The ID of the evaluation.
+     * @param score The score to save.
+     * @param studentId The ID of the student.
+     */
     private void saveGrade(String evaluationId, String score, String studentId) {
         UUID gradeId = UUID.randomUUID();
         dbHelper.getWritableDatabase().execSQL("INSERT OR REPLACE INTO " + AppDbSchema.GradeTable.NAME + " (" +
@@ -79,6 +109,12 @@ public class EvaluationGradesAdapter extends RecyclerView.Adapter<EvaluationGrad
         Log.d("EvaluationGradesAdapter", "Grade saved for evaluation: " + evaluationId);
     }
 
+    /**
+     * Retrieves the grade for a specific evaluation and student.
+     * @param studentId The ID of the student.
+     * @param evaluationId The ID of the evaluation.
+     * @return The grade score.
+     */
     private int getGradeForEvaluation(String studentId, String evaluationId) {
         Cursor cursor = dbHelper.getReadableDatabase().query(
                 AppDbSchema.GradeTable.NAME,
@@ -100,12 +136,19 @@ public class EvaluationGradesAdapter extends RecyclerView.Adapter<EvaluationGrad
         return 0;
     }
 
+    /**
+     * ViewHolder class for the EvaluationGradesAdapter.
+     */
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView evalName;
         TextView scoreDisplay;
         EditText scoreInput;
         Button saveButton;
 
+        /**
+         * Constructor for the ViewHolder.
+         * @param itemView The view for the evaluation item.
+         */
         public ViewHolder(View itemView) {
             super(itemView);
             evalName = itemView.findViewById(R.id.evalName);

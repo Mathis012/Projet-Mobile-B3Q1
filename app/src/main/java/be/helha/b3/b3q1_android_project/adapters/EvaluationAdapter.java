@@ -21,6 +21,9 @@ import be.helha.b3.b3q1_android_project.db.AppDatabaseHelper;
 import be.helha.b3.b3q1_android_project.db.AppDbSchema;
 import be.helha.b3.b3q1_android_project.models.Student;
 
+/**
+ * Adapter class for displaying a list of students and their evaluation scores in a RecyclerView.
+ */
 public class EvaluationAdapter extends RecyclerView.Adapter<EvaluationAdapter.EvaluationViewHolder> {
 
     private List<Student> students;
@@ -29,6 +32,13 @@ public class EvaluationAdapter extends RecyclerView.Adapter<EvaluationAdapter.Ev
     private Context context;
     private AppDatabaseHelper dbHelper;
 
+    /**
+     * Constructor for the EvaluationAdapter.
+     * @param context The context in which the adapter is used.
+     * @param students The list of students to display.
+     * @param courseId The ID of the course.
+     * @param classId The ID of the class.
+     */
     public EvaluationAdapter(Context context, List<Student> students, String courseId, String classId) {
         this.context = context;
         this.students = students;
@@ -37,6 +47,12 @@ public class EvaluationAdapter extends RecyclerView.Adapter<EvaluationAdapter.Ev
         this.dbHelper = new AppDatabaseHelper(context);
     }
 
+    /**
+     * Creates a new ViewHolder instance.
+     * @param parent The parent view.
+     * @param viewType The view type.
+     * @return A new ViewHolder instance.
+     */
     @NonNull
     @Override
     public EvaluationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -44,6 +60,11 @@ public class EvaluationAdapter extends RecyclerView.Adapter<EvaluationAdapter.Ev
         return new EvaluationViewHolder(view);
     }
 
+    /**
+     * Binds the data to the ViewHolder.
+     * @param holder The ViewHolder instance.
+     * @param position The position of the item in the list.
+     */
     @Override
     public void onBindViewHolder(@NonNull EvaluationViewHolder holder, int position) {
         Student student = students.get(position);
@@ -60,16 +81,27 @@ public class EvaluationAdapter extends RecyclerView.Adapter<EvaluationAdapter.Ev
         });
     }
 
+    /**
+     * Returns the total number of items in the data set held by the adapter.
+     * @return The total number of items in this adapter.
+     */
     @Override
     public int getItemCount() {
         return students.size();
     }
 
+    /**
+     * ViewHolder class for the EvaluationAdapter.
+     */
     public static class EvaluationViewHolder extends RecyclerView.ViewHolder {
         TextView studentTextView;
         TextView averageTextView;
         ImageButton arrowButton;
 
+        /**
+         * Constructor for the ViewHolder.
+         * @param itemView The view for the evaluation item.
+         */
         public EvaluationViewHolder(@NonNull View itemView) {
             super(itemView);
             studentTextView = itemView.findViewById(R.id.evaluationName);
@@ -78,6 +110,12 @@ public class EvaluationAdapter extends RecyclerView.Adapter<EvaluationAdapter.Ev
         }
     }
 
+    /**
+     * Calculates the average score of a student for a specific course.
+     * @param studentId The ID of the student.
+     * @param courseId The ID of the course.
+     * @return The average score on a scale of 20.
+     */
     private double calculateAverageOn20(String studentId, String courseId) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cursor = db.rawQuery(

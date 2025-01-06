@@ -22,6 +22,9 @@ import be.helha.b3.b3q1_android_project.db.AppDatabaseHelper;
 import be.helha.b3.b3q1_android_project.db.AppDbSchema;
 import be.helha.b3.b3q1_android_project.models.Evaluation;
 
+/**
+ * Fragment for displaying and managing grades for a specific student in a specific course.
+ */
 public class StudentGradesFragment extends Fragment {
 
     private static final String ARG_STUDENT_ID = "STUDENT_ID";
@@ -31,6 +34,12 @@ public class StudentGradesFragment extends Fragment {
     private String studentId;
     private String courseId;
 
+    /**
+     * Creates a new instance of StudentGradesFragment with the provided student ID and course ID.
+     * @param studentId The ID of the student.
+     * @param courseId The ID of the course.
+     * @return A new instance of StudentGradesFragment.
+     */
     public static StudentGradesFragment newInstance(String studentId, String courseId) {
         StudentGradesFragment fragment = new StudentGradesFragment();
         Bundle args = new Bundle();
@@ -40,6 +49,13 @@ public class StudentGradesFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * Called to have the fragment instantiate its user interface view.
+     * @param inflater The LayoutInflater object that can be used to inflate any views in the fragment.
+     * @param container If non-null, this is the parent view that the fragment's UI should be attached to.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous saved state as given here.
+     * @return Return the View for the fragment's UI, or null.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_student_grades, container, false);
@@ -49,11 +65,17 @@ public class StudentGradesFragment extends Fragment {
             courseId = getArguments().getString(ARG_COURSE_ID);
         }
 
-            loadEvaluationsForStudent(view, studentId, courseId);
+        loadEvaluationsForStudent(view, studentId, courseId);
 
         return view;
     }
 
+    /**
+     * Loads the evaluations for the specified student and course, and sets the adapter for the RecyclerView.
+     * @param view The view containing the RecyclerView.
+     * @param studentId The ID of the student.
+     * @param courseId The ID of the course.
+     */
     private void loadEvaluationsForStudent(View view, String studentId, String courseId) {
         RecyclerView recyclerView = view.findViewById(R.id.gradesList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -62,6 +84,11 @@ public class StudentGradesFragment extends Fragment {
         recyclerView.setAdapter(adapter);
     }
 
+    /**
+     * Retrieves the list of evaluations for a specific course from the database.
+     * @param courseId The ID of the course.
+     * @return The list of evaluations.
+     */
     private List<Evaluation> getEvaluationsForCourse(String courseId) {
         Context context = getContext();
         if (context == null) {
